@@ -1,11 +1,13 @@
+using TMPro;
 using UnityEngine;
 
-public class CameraRaycast : MonoBehaviour
+public class AinOnTarget : MonoBehaviour
 {
     Camera mainCamera;
     public LayerMask monsterLayer;
     public float maxRaycastDistance = 100f;
     public float checkRange = 1f;
+    public TextMeshPro displayText;
 
     void Start()
     {
@@ -21,14 +23,24 @@ public class CameraRaycast : MonoBehaviour
         {
             if (hit.collider.CompareTag("Monster"))
             {
+
                 float distanceToMonster = Vector3.Distance(mainCamera.transform.position, hit.point);
                 if (distanceToMonster > checkRange)     // 准星为问号
                 {
+                    displayText.text = "?";
+                    displayText.color = Color.red;
                     Debug.Log("Too far!");
                 }
-                else    // 准星为捕捉中
+                else if (distanceToMonster <= checkRange)    // 准星为捕捉中
                 {
+                    displayText.text = "Scanning...";
+                    displayText.color = Color.yellow;
                     Debug.Log("Can catch!");
+                }
+                else
+                {
+                    displayText.text = "";
+                    Debug.Log("Nothing!");
                 }
             }
         }
