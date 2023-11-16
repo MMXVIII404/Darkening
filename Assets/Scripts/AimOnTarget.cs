@@ -3,15 +3,15 @@ using UnityEngine;
 
 public class AinOnTarget : MonoBehaviour
 {
-    Camera mainCamera;
+    public Camera mainCamera;
     public LayerMask monsterLayer;
     public float maxRaycastDistance = 100f;
     public float checkRange = 1f;
-    public TextMeshPro displayText;
+    public GameObject displayText;
 
     void Start()
     {
-        mainCamera = Camera.main;
+        // mainCamera = Camera.main;
     }
 
     void Update()
@@ -25,22 +25,22 @@ public class AinOnTarget : MonoBehaviour
             {
 
                 float distanceToMonster = Vector3.Distance(mainCamera.transform.position, hit.point);
-                if (distanceToMonster > checkRange)     // ×¼ÐÇÎªÎÊºÅ
+                if (distanceToMonster > checkRange)     // ×¼ï¿½ï¿½Îªï¿½Êºï¿½
                 {
-                    displayText.text = "?";
-                    displayText.color = Color.red;
-                    Debug.Log("Too far!");
+                    displayText.GetComponent<TMP_Text>().text = "?";
+                    displayText.GetComponent<TMP_Text>().color = Color.red;
+                    // Debug.Log("Too far!");
                 }
-                else if (distanceToMonster <= checkRange)    // ×¼ÐÇÎª²¶×½ÖÐ
+                else if (distanceToMonster <= checkRange)    // ×¼ï¿½ï¿½Îªï¿½ï¿½×½ï¿½ï¿½
                 {
-                    displayText.text = "Scanning...";
-                    displayText.color = Color.yellow;
-                    Debug.Log("Can catch!");
+                    displayText.GetComponent<TMP_Text>().text = "Scanning...";
+                    displayText.GetComponent<TMP_Text>().color = Color.yellow;
+                    // Debug.Log("Can catch!");
                 }
                 else
                 {
-                    displayText.text = "";
-                    Debug.Log("Nothing!");
+                    displayText.GetComponent<TMP_Text>().text = "";
+                    // Debug.Log("Nothing!");
                 }
             }
         }
