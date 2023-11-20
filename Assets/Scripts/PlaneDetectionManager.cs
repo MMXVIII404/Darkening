@@ -31,7 +31,7 @@ public class PlaneDetectionManager : MonoBehaviour
             processedPlanes.Add(plane);
             Instantiate(monster, plane.transform.position, plane.transform.rotation);
             monster.transform.up = plane.transform.up;
-            Debug.Log("检测到Vertical平面");
+            Debug.Log("检测到平面");
             }
             
             // 处理更新的平面
