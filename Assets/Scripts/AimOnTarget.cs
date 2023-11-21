@@ -1,13 +1,18 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AinOnTarget : MonoBehaviour
 {
     public Camera mainCamera;
     public LayerMask monsterLayer;
     public float maxRaycastDistance = 100f;
-    public float checkRange = 1f;
+    public float checkRange = 3f;
     public GameObject displayText;
+
+    bool buttonPressed = false;
+    string currentMonsterName = string.Empty;
+    //public Button catchButton;
 
     void Start()
     {
@@ -15,6 +20,11 @@ public class AinOnTarget : MonoBehaviour
     }
 
     void Update()
+    {
+        Catch();
+    }
+
+    private void Catch()
     {
         Ray ray = mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
@@ -36,14 +46,29 @@ public class AinOnTarget : MonoBehaviour
                 {
                     displayText.GetComponent<TMP_Text>().text = "Scanning...";
                     displayText.GetComponent<TMP_Text>().color = Color.yellow;
+
+                    if (buttonPressed)
+                    {
+                        // TODO: Add some VFX to destroy the monster
+
+                        currentMonsterName = hit.collider.gameObject.name;
+                        Destroy(hit.collider.gameObject);
+
+                        buttonPressed = false;
+                    }
+
                     // Debug.Log("Can catch!");
                 }
                 else
                 {
-                    displayText.GetComponent<TMP_Text>().text = "";
+                    displayText.GetComponent<TMP_Text>().text = "No Monster";
                     // Debug.Log("Nothing!");
                 }
             }
         }
+    }
+    public void SetCatchStatus(bool status)
+    {
+        buttonPressed = status;
     }
 }
