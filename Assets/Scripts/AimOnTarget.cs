@@ -8,13 +8,20 @@ public class AinOnTarget : MonoBehaviour
     public float maxRaycastDistance = 100f;
     public float checkRange = 1f;
     public GameObject displayText;
-
+    [SerializeField]
+    bool buttonPressed = false;
+    string currentCatchMonster = "";
     void Start()
     {
         // mainCamera = Camera.main;
     }
 
     void Update()
+    {
+        Catch();
+    }
+
+    private void Catch()
     {
         Ray ray = mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
@@ -36,6 +43,17 @@ public class AinOnTarget : MonoBehaviour
                 {
                     displayText.GetComponent<TMP_Text>().text = "Scanning...";
                     displayText.GetComponent<TMP_Text>().color = Color.yellow;
+
+                    if (buttonPressed)
+                    {
+                        // TODO: Add some VFX to destroy the monster
+                        currentCatchMonster = hit.collider.gameObject.name;
+                        Destroy(hit.collider.gameObject);
+
+                        buttonPressed = false;
+
+                    }
+
                     // Debug.Log("Can catch!");
                 }
                 else
@@ -45,5 +63,9 @@ public class AinOnTarget : MonoBehaviour
                 }
             }
         }
+    }
+    public void SetbuttonPressed(bool status)
+    {
+        buttonPressed = status;
     }
 }
