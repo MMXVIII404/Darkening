@@ -25,6 +25,7 @@ public class AinOnTarget : MonoBehaviour
             {
 
                 float distanceToMonster = Vector3.Distance(mainCamera.transform.position, hit.point);
+                // Debug.Log(distanceToMonster);
                 if (distanceToMonster > checkRange)     // ׼��Ϊ�ʺ�
                 {
                     displayText.GetComponent<TMP_Text>().text = "?";
