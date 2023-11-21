@@ -137,7 +137,6 @@ public class PlaneDetectionManager : MonoBehaviour
             }
         }
     }
-
 }
 
 

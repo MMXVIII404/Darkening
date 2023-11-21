@@ -11,6 +11,7 @@ public class AinOnTarget : MonoBehaviour
     public GameObject displayText;
 
     bool buttonPressed = false;
+    bool inRange = false;
     string currentMonsterName = string.Empty;
     //public Button catchButton;
 
@@ -45,6 +46,7 @@ public class AinOnTarget : MonoBehaviour
                 else if (distanceToMonster <= checkRange)    // ׼��Ϊ��׽��
                 {
                     displayText.GetComponent<TMP_Text>().text = "Scanning...";
+                    inRange = true;
                     displayText.GetComponent<TMP_Text>().color = Color.yellow;
 
                     if (buttonPressed)
@@ -55,6 +57,7 @@ public class AinOnTarget : MonoBehaviour
                         Destroy(hit.collider.gameObject);
 
                         buttonPressed = false;
+                        inRange = false;
                     }
 
                     // Debug.Log("Can catch!");
@@ -69,6 +72,9 @@ public class AinOnTarget : MonoBehaviour
     }
     public void SetCatchStatus(bool status)
     {
-        buttonPressed = status;
+        if (inRange)
+        {
+            buttonPressed = status;
+        }
     }
 }
