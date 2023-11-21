@@ -13,6 +13,7 @@ public class PlaneDetectionManager : MonoBehaviour
     [SerializeField]
     private Vector2 currentMonsters = Vector2.zero;
     private HashSet<ARPlane> processedPlanes = new HashSet<ARPlane>();
+    private bool test;
 
     void Start()
     {
