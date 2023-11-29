@@ -2,14 +2,33 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARSubsystems;
 
 public class PlaneDetectionManager : MonoBehaviour
 {
     ARPlaneManager planeManager;
-    public GameObject monster;
+    public GameObject fakeMonsterPrefab;
+    [SerializeField]
+    private int monsterCountFront;
+    [SerializeField]
+    private int monsterCountBack;
+    public GameObject trueMonsterPrefab;
+    public GameObject smokeEffect;
     private Camera mainCamera;
+    [SerializeField]
+    private GameObject[] fakeMonstersFront;
+    [SerializeField]
+    private GameObject[] fakeMonstersBack;
     private int i = 0;
-    public Vector2 maxMonsters = new Vector2(1f, 1f);
+    public Vector2 maxMonsters = new Vector2(25f, 25f);
+    [SerializeField]
+    private int trueMonsterNumber;
+    private bool forwardOrBack = true;
+    private float monsterStart = 0.0f;
+    private int monsterStartCount = 0;
+    private bool addOnce = true;
+    private float deltaTime = 0.0f;
+    public float maxGenerateHeight = 3.0f; //TODO: 改成预扫描要扫到天花板/实时更新当前最高的horzitonal plane + 2f为最高生成高度
     [SerializeField]
     private Vector2 currentMonsters = Vector2.zero;
     private HashSet<ARPlane> processedPlanes = new HashSet<ARPlane>();
@@ -23,6 +42,15 @@ public class PlaneDetectionManager : MonoBehaviour
 
     void Start()
     {
+        fakeMonstersFront = new GameObject[(int)maxMonsters.x];
+        fakeMonstersBack = new GameObject[(int)maxMonsters.y];
+        trueMonsterNumber = Random.Range(0,50);
+        forwardOrBack = (trueMonsterNumber - 25) >= 0? true : false;
+        if(!forwardOrBack){
+            trueMonsterNumber -= 25;
+        }
+        addOnce = true;
+        monsterStartCount = 0;
         currentMonsters = maxMonsters;
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         planeManager = GetComponent<ARPlaneManager>();
@@ -56,40 +84,85 @@ public class PlaneDetectionManager : MonoBehaviour
             // plane.transform.position.y -= 0.3f;
             if (isButtonBegin)
             {
-                if (plane.size.x > 1.5f && plane.size.y > 1.5f)
+                if (plane.alignment == PlaneAlignment.HorizontalUp)
                 {
-                    if (currentMonsters.x >= 1 && plane.transform.position.z - mainCamera.transform.position.z > 0)
+                    if (plane.size.x > 1.5f && plane.size.y > 1.5f)
                     {
-                        foreach (var point in plane.boundary)
-                        {
-                            boundaryPoints.Add(point);
+                        deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
+                        float fps = 1.0f / deltaTime;
+                        monsterStart++;
+                        if (monsterStart > fps){
+                            if(addOnce){
+                            monsterStartCount ++;
+                            addOnce = false;
+                            }
+                            for(int i = 0; i < monsterStartCount; i++){
+                                if ( plane.transform.position.z - mainCamera.transform.position.z > 0)
+                            {
+                                if(currentMonsters.x >= 1 ){
+                                    foreach (var point in plane.boundary)
+                                {
+                                    boundaryPoints.Add(point);
+                                }
+                                Vector2 randomPoint = RandomPointInPolygon(boundaryPoints);
+                                float randomHeight = Random.Range(0,maxGenerateHeight);
+                                Vector3 randomPoint3D = plane.transform.TransformPoint(new Vector3(randomPoint.x, randomHeight, randomPoint.y));
+                                fakeMonstersFront[monsterCountFront] = Instantiate(fakeMonsterPrefab, randomPoint3D, mainCamera.transform.rotation);
+                                monsterCountFront++;
+                                currentMonsters.x -= 1;
+                                if (currentMonsters.x == 0 && currentMonsters.y == 0)
+                                {
+                                    if(forwardOrBack){
+                                        Destroy(fakeMonstersFront[trueMonsterNumber]);
+                                        Instantiate(trueMonsterPrefab, randomPoint3D, mainCamera.transform.rotation);
+                                    }
+                                    isButtonBegin = false;
+                                }
+                                }
+                                
+                            }
+                            else if ( plane.transform.position.z - mainCamera.transform.position.z < 0)
+                            {
+                                if(currentMonsters.y >= 1){
+                                    foreach (var point in plane.boundary)
+                                {
+                                    boundaryPoints.Add(point);
+                                }
+                                Vector2 randomPoint = RandomPointInPolygon(boundaryPoints);
+                                float randomHeight = Random.Range(0,maxGenerateHeight);
+                                Vector3 randomPoint3D = plane.transform.TransformPoint(new Vector3(randomPoint.x, randomHeight, randomPoint.y));
+                                fakeMonstersBack[monsterCountFront] = Instantiate(fakeMonsterPrefab, mainCamera.transform.position - new Vector3(0, 0, 1) * 2f, mainCamera.transform.rotation);
+                                monsterCountBack++;
+                                currentMonsters.y -= 1;
+                                if (currentMonsters.x == 0 && currentMonsters.y == 0)
+                                {
+                                    if(!forwardOrBack){
+                                         Destroy(fakeMonstersFront[trueMonsterNumber]);
+                                         Instantiate(trueMonsterPrefab, randomPoint3D, mainCamera.transform.rotation);
+                                    }
+                                    isButtonBegin = false;
+                                }
+                                }
+                            }
+                            if(i == monsterStartCount -1){  //这里可能没有-1，具体需要调试
+                            monsterStart = 0.0f;
+                            addOnce = true;
+                            }
+                            }
+                            
+                            
                         }
-                        Vector2 randomPoint = RandomPointInPolygon(boundaryPoints);
-                        Vector3 randomPoint3D = plane.transform.TransformPoint(new Vector3(randomPoint.x, 0, randomPoint.y));
-                        Instantiate(monster, randomPoint3D, mainCamera.transform.rotation);
-                        currentMonsters.x -= 1;
-                        if (currentMonsters.x == 0 && currentMonsters.y == 0)
-                        {
-                            isButtonBegin = false;
-                        }
-                    }
-                    else if (currentMonsters.y >= 1 && plane.transform.position.z - mainCamera.transform.position.z < 0)
-                    {
-                        foreach (var point in plane.boundary)
-                        {
-                            boundaryPoints.Add(point);
-                        }
-                        Vector2 randomPoint = RandomPointInPolygon(boundaryPoints);
-                        Vector3 randomPoint3D = plane.transform.TransformPoint(new Vector3(randomPoint.x, 0, randomPoint.y));
-                        Instantiate(monster, mainCamera.transform.position - new Vector3(0, 0, 1) * 2f, mainCamera.transform.rotation);
-                        currentMonsters.y -= 1;
-                        if (currentMonsters.x == 0 && currentMonsters.y == 0)
-                        {
-                            isButtonBegin = false;
-                        }
-
+                            
                     }
                 }
+                else if (plane.alignment == PlaneAlignment.Vertical)
+                {
+                    if(smokeEffect != null){
+                        smokeEffect.GetComponent<ParticleSystem>().Play();
+                    }
+                    // TODO : generate vine effect;
+                }
+
 
             }
 
