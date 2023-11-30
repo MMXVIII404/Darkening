@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AinOnTarget : MonoBehaviour
+public class AimOnTarget : MonoBehaviour
 {
     public Camera mainCamera;
     public LayerMask monsterLayer;
@@ -13,6 +14,7 @@ public class AinOnTarget : MonoBehaviour
     public GameObject displayText;
 
     public Image checkArea;
+    public event Action onHitAction;
 
     bool buttonPressed = false;
     bool inRange = false;
@@ -22,6 +24,7 @@ public class AinOnTarget : MonoBehaviour
     bool startCountTime = false;
     bool catched = false;
     bool startCatching = false;
+    int San = 100;
 
     //public Button catchButton;
 
@@ -78,7 +81,7 @@ public class AinOnTarget : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, monsterLayer))
         {
-            if (hit.collider.CompareTag("Monster"))
+            if (hit.collider.CompareTag("Monster") || hit.collider.CompareTag("TrueMonster"))
             {
                 float distanceToMonster = Vector3.Distance(mainCamera.transform.position, hit.point);
 
@@ -145,12 +148,25 @@ public class AinOnTarget : MonoBehaviour
 
                 if (stayTime >= 5f)
                 {
-                    displayText.GetComponent<TMP_Text>().text = "Monster caught!";
-                    checkArea.gameObject.SetActive(false);
-                    yield return new WaitForSeconds(2f); // 等待2秒
-                    // TODO: Add some VFX to destroy the monster
-                    Destroy(Monster); // 假设您要销毁怪物对象
-                    break; // 成功捕捉，退出循环
+                    if (Monster.CompareTag("Monster"))
+                    {
+                        displayText.GetComponent<TMP_Text>().text = "Monster caught!";
+                        checkArea.gameObject.SetActive(false);
+                        yield return new WaitForSeconds(2f); // 等待2秒
+                                                             // TODO: Add some VFX to destroy the monster
+                        Destroy(Monster); // 假设您要销毁怪物对象
+                        break; // 成功捕捉，退出循环
+                    }
+                    else
+                    {
+                        displayText.GetComponent<TMP_Text>().text = "Fake Monster!";
+                        checkArea.gameObject.SetActive(false);
+                        yield return new WaitForSeconds(2f);
+                        // TODO: Hit Effect
+                        OnHit(5);   // Get damage
+
+                        break;
+                    }
                 }
             }
             else
@@ -158,7 +174,10 @@ public class AinOnTarget : MonoBehaviour
                 stayTime = 0f; // 如果怪物移出了检测区域，重置计时器
                 displayText.GetComponent<TMP_Text>().text = "Monster escaped!";
                 checkArea.gameObject.SetActive(false);
+                // TODO: Hit Effect
+                OnHit(5);   // Get damage
                 yield return new WaitForSeconds(2f); // 等待2秒
+
 
                 // 可以在这里添加逻辑，如果怪物逃走了，是否停止捕捉
                 startCatching = false;
@@ -173,5 +192,22 @@ public class AinOnTarget : MonoBehaviour
         
         startCountTime = false;
         startCatching = false;
+    }
+
+    public int GetSan()
+    {
+        return San;
+    }
+
+    void OnHit(int damage)
+    {
+        San -= damage;
+
+        onHitAction?.Invoke();
+
+        if (San <= 0)
+        {
+            // Game Over
+        }
     }
 }
