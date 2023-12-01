@@ -23,7 +23,9 @@ public class PlaneDetectionManager : MonoBehaviour
     public Vector2 maxMonsters = new Vector2(25f, 25f);
     [SerializeField]
     private int trueMonsterNumber;
+    [SerializeField]
     private bool forwardOrBack = true;
+    [SerializeField]
     private float monsterStart = 0.0f;
     private int monsterStartCount = 0;
     private bool addOnce = true;
@@ -42,12 +44,12 @@ public class PlaneDetectionManager : MonoBehaviour
 
     void Start()
     {
-        fakeMonstersFront = new GameObject[(int)maxMonsters.x];
-        fakeMonstersBack = new GameObject[(int)maxMonsters.y];
-        trueMonsterNumber = Random.Range(0,50);
-        forwardOrBack = (trueMonsterNumber - 25) >= 0? true : false;
+        fakeMonstersFront = new GameObject[(int)maxMonsters.x * 2];
+        fakeMonstersBack = new GameObject[(int)maxMonsters.y * 2];
+        trueMonsterNumber = Random.Range(0, (int)maxMonsters.x *2);
+        forwardOrBack = (trueMonsterNumber - (int)maxMonsters.x) >= 0? false : true;
         if(!forwardOrBack){
-            trueMonsterNumber -= 25;
+            trueMonsterNumber -= (int)maxMonsters.x;
         }
         addOnce = true;
         monsterStartCount = 0;
@@ -86,13 +88,15 @@ public class PlaneDetectionManager : MonoBehaviour
             {
                 if (plane.alignment == PlaneAlignment.HorizontalUp)
                 {
-                    if (plane.size.x > 1.5f && plane.size.y > 1.5f)
+                    if (true) //plane.size.x > 1.5f && plane.size.y > 1.5f
                     {
-                        deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
-                        float fps = 1.0f / deltaTime;
+                        //deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
+                        //float fps = 1.0f / deltaTime;
                         monsterStart++;
-                        if (monsterStart > fps){
-                            if(addOnce){
+                        if (monsterStart > 60){
+                            monsterStart = 0.0f;
+                            addOnce = true;
+                            if (addOnce){
                             monsterStartCount ++;
                             addOnce = false;
                             }
@@ -107,16 +111,27 @@ public class PlaneDetectionManager : MonoBehaviour
                                 Vector2 randomPoint = RandomPointInPolygon(boundaryPoints);
                                 float randomHeight = Random.Range(0,maxGenerateHeight);
                                 Vector3 randomPoint3D = plane.transform.TransformPoint(new Vector3(randomPoint.x, randomHeight, randomPoint.y));
+                                Debug.Log(randomPoint3D);
                                 fakeMonstersFront[monsterCountFront] = Instantiate(fakeMonsterPrefab, randomPoint3D, mainCamera.transform.rotation);
                                 monsterCountFront++;
                                 currentMonsters.x -= 1;
-                                if (currentMonsters.x == 0 && currentMonsters.y == 0)
+                                if (currentMonsters.x == 0)
                                 {
                                     if(forwardOrBack){
-                                        Destroy(fakeMonstersFront[trueMonsterNumber]);
-                                        Instantiate(trueMonsterPrefab, randomPoint3D, mainCamera.transform.rotation);
+                                                Debug.Log("1");
+                                                /* if (trueMonsterNumber >= 1)
+                                                 {
+                                                     Destroy(fakeMonstersFront[trueMonsterNumber - 1]);
+                                                 }
+                                                 else
+                                                 {
+                                                     Destroy(fakeMonstersFront[0]);
+                                                 }*/
+                                                Instantiate(trueMonsterPrefab, randomPoint3D, mainCamera.transform.rotation);
+                                                Destroy(fakeMonstersFront[trueMonsterNumber - 1]);
+ 
                                     }
-                                    isButtonBegin = false;
+                                    //isButtonBegin = false;
                                 }
                                 }
                                 
@@ -131,26 +146,38 @@ public class PlaneDetectionManager : MonoBehaviour
                                 Vector2 randomPoint = RandomPointInPolygon(boundaryPoints);
                                 float randomHeight = Random.Range(0,maxGenerateHeight);
                                 Vector3 randomPoint3D = plane.transform.TransformPoint(new Vector3(randomPoint.x, randomHeight, randomPoint.y));
-                                fakeMonstersBack[monsterCountFront] = Instantiate(fakeMonsterPrefab, mainCamera.transform.position - new Vector3(0, 0, 1) * 2f, mainCamera.transform.rotation);
+                                fakeMonstersBack[monsterCountBack] = Instantiate(fakeMonsterPrefab, mainCamera.transform.position - new Vector3(0, 0, 1) * 2f, mainCamera.transform.rotation);
                                 monsterCountBack++;
                                 currentMonsters.y -= 1;
-                                if (currentMonsters.x == 0 && currentMonsters.y == 0)
+                                if (currentMonsters.y == 0)
                                 {
                                     if(!forwardOrBack){
-                                         Destroy(fakeMonstersFront[trueMonsterNumber]);
-                                         Instantiate(trueMonsterPrefab, randomPoint3D, mainCamera.transform.rotation);
-                                    }
-                                    isButtonBegin = false;
+                                                Debug.Log("2");
+                                                /*if (trueMonsterNumber >= 1)
+                                                {
+                                                    Destroy(fakeMonstersBack[trueMonsterNumber - 1]);
+                                                }
+                                                else
+                                                {
+                                                    Destroy(fakeMonstersBack[0]);
+                                                }*/
+                                                //Instantiate(trueMonsterPrefab, randomPoint3D, mainCamera.transform.rotation);
+                                                Instantiate(trueMonsterPrefab, randomPoint3D, mainCamera.transform.rotation);
+                                                Destroy(fakeMonstersBack[trueMonsterNumber - 1]);
+                                            }
+                                    //isButtonBegin = false;
                                 }
                                 }
                             }
                             if(i == monsterStartCount -1){  //这里可能没有-1，具体需要调试
-                            monsterStart = 0.0f;
-                            addOnce = true;
+                            //monsterStart = 0.0f;
+                            //addOnce = true;
                             }
                             }
-                            
-                            
+                            //monsterStart = 0.0f;
+                            //addOnce = true;
+
+
                         }
                             
                     }
