@@ -148,7 +148,7 @@ public class AimOnTarget : MonoBehaviour
 
                 if (stayTime >= 5f)
                 {
-                    if (Monster.CompareTag("Monster"))
+                    if (Monster.CompareTag("TrueMonster"))
                     {
                         displayText.GetComponent<TMP_Text>().text = "Monster caught!";
                         checkArea.gameObject.SetActive(false);

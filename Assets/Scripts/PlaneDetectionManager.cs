@@ -46,7 +46,7 @@ public class PlaneDetectionManager : MonoBehaviour
     {
         fakeMonstersFront = new GameObject[(int)maxMonsters.x * 2];
         fakeMonstersBack = new GameObject[(int)maxMonsters.y * 2];
-        trueMonsterNumber = Random.Range(0, (int)maxMonsters.x *2);
+        trueMonsterNumber = Random.Range(3, (int)maxMonsters.x * 2 - 1);
         forwardOrBack = (trueMonsterNumber - (int)maxMonsters.x) >= 0? false : true;
         if(!forwardOrBack){
             trueMonsterNumber -= (int)maxMonsters.x;
@@ -127,7 +127,7 @@ public class PlaneDetectionManager : MonoBehaviour
                                                  {
                                                      Destroy(fakeMonstersFront[0]);
                                                  }*/
-                                                Instantiate(trueMonsterPrefab, randomPoint3D, mainCamera.transform.rotation);
+                                                Instantiate(trueMonsterPrefab, fakeMonstersFront[trueMonsterNumber - 1].transform.position, mainCamera.transform.rotation);
                                                 Destroy(fakeMonstersFront[trueMonsterNumber - 1]);
  
                                     }
@@ -162,7 +162,7 @@ public class PlaneDetectionManager : MonoBehaviour
                                                     Destroy(fakeMonstersBack[0]);
                                                 }*/
                                                 //Instantiate(trueMonsterPrefab, randomPoint3D, mainCamera.transform.rotation);
-                                                Instantiate(trueMonsterPrefab, randomPoint3D, mainCamera.transform.rotation);
+                                                Instantiate(trueMonsterPrefab, fakeMonstersBack[trueMonsterNumber - 1].transform.position, mainCamera.transform.rotation);
                                                 Destroy(fakeMonstersBack[trueMonsterNumber - 1]);
                                             }
                                     //isButtonBegin = false;
