@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Threading;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -14,6 +15,7 @@ public class AimOnTarget : MonoBehaviour
     public GameObject displayText;
 
     public Image checkArea;
+    public Slider checkAreaSlider;
     public event Action onHitAction;
 
     bool buttonPressed = false;
@@ -25,6 +27,8 @@ public class AimOnTarget : MonoBehaviour
     bool catched = false;
     bool startCatching = false;
     int San = 100;
+    GameObject currentMonster;
+    Vector2 checkAreaPostion;
 
     //public Button catchButton;
 
@@ -38,6 +42,7 @@ public class AimOnTarget : MonoBehaviour
         //Catch();
         CountTime();
         PointAtMonster();
+        FollowMonster();
     }
 
 
@@ -47,19 +52,6 @@ public class AimOnTarget : MonoBehaviour
         {
             buttonPressed = true;
         }
-    }
-
-
-    private bool IsPointInsideCheckArea(GameObject Monster)
-    {
-        Vector2 checkAreaPostion = RectTransformUtility.WorldToScreenPoint(mainCamera, Monster.transform.position);    // Monster postion on screen
-        checkArea.GetComponent<RectTransform>().position = checkAreaPostion;   // Check area follow the Monster position on screen
-
-        float distanceToCheckArea = Vector2.Distance(checkAreaPostion, new Vector2(Screen.width / 2, Screen.height / 2));
-
-        float radius = checkArea.rectTransform.sizeDelta.x * 0.5f;
-
-        return distanceToCheckArea <= radius; ;
     }
 
     void CountTime()
@@ -125,30 +117,52 @@ public class AimOnTarget : MonoBehaviour
         }
     }
 
+    void FollowMonster()
+    {
+        if (currentMonster != null)
+        {
+            checkAreaPostion = RectTransformUtility.WorldToScreenPoint(mainCamera, currentMonster.transform.position);    // Monster postion on screen
+            checkArea.GetComponent<RectTransform>().position = checkAreaPostion;   // Check area follow the Monster position on screen
+        }
+    }
+    private bool IsPointInsideCheckArea(GameObject Monster)
+    {
+        float distanceToCheckArea = Vector2.Distance(checkAreaPostion, new Vector2(Screen.width / 2, Screen.height / 2));
+
+        float radius = checkArea.rectTransform.sizeDelta.x * 0.5f;
+
+        return distanceToCheckArea <= radius; ;
+    }
+
     IEnumerator StartCatching(GameObject Monster)
     {
+        currentMonster = Monster;
         buttonPressed = false;
         // 显示扫描信息并等待两秒
         displayText.GetComponent<TMP_Text>().text = "Prepare to scan...";
         displayText.GetComponent<TMP_Text>().color= Color.green;
+        checkArea.gameObject.SetActive(true);
+        checkAreaSlider.gameObject.SetActive(true);
+        checkAreaSlider.value = 0f;
         yield return new WaitForSeconds(2f); // 等待2秒
 
         // 激活扫描区域
-        checkArea.gameObject.SetActive(true);
+        
         startCountTime = true;
 
         float stayTime = 0f;
 
         while (startCatching) // 使用 startCatching 来控制循环
         {
-            if (IsPointInsideCheckArea(Monster))
+            if (IsPointInsideCheckArea(currentMonster))
             {
                 displayText.GetComponent<TMP_Text>().text = $"Scanning... {stayTime:F1}";
                 stayTime += Time.deltaTime;
+                checkAreaSlider.value = stayTime / 5f;
 
                 if (stayTime >= 5f)
                 {
-                    if (Monster.CompareTag("TrueMonster"))
+                    if (currentMonster.CompareTag("TrueMonster"))
                     {
                         displayText.GetComponent<TMP_Text>().text = "Monster caught!";
                         checkArea.gameObject.SetActive(false);
@@ -161,9 +175,9 @@ public class AimOnTarget : MonoBehaviour
                     {
                         displayText.GetComponent<TMP_Text>().text = "Fake Monster!";
                         checkArea.gameObject.SetActive(false);
+                        OnHit(5);   // Get damage
                         yield return new WaitForSeconds(2f);
                         // TODO: Hit Effect
-                        OnHit(5);   // Get damage
 
                         break;
                     }
