@@ -4,14 +4,22 @@ using UnityEngine;
 
 public class Monster : MonoBehaviour
 {
-    string name = string.Empty;
-    [SerializeField] MonsterDescription monsterDescription;
+    public GameObject slots; // 父 GameObject
 
-    public void SetName(string name) { this.name = name; }
-    public string GetName() { return name; }
-
-    public void SetMonster()
+    public void AssignNameToSlot()
     {
-        monsterDescription.SetMonsterInformation(this);
+        for (int i = 0; i < slots.transform.childCount; i++)
+        {
+            GameObject child = slots.transform.GetChild(i).gameObject;
+            MonsterSlot script = child.GetComponent<MonsterSlot>();
+
+            if (script != null && !script.GetContainStatus())
+            {
+                // 如果 GetContainStatus 返回 false，则设置名称并调用 SetContainStatus
+                script.SetName(this.name);
+                script.SetContainStatus();
+                break; // 赋值成功后退出循环
+            }
+        }
     }
 }
