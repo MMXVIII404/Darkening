@@ -176,6 +176,7 @@ public class AimOnTarget : MonoBehaviour
                         displayText.GetComponent<TMP_Text>().text = "Fake Monster!";
                         checkArea.gameObject.SetActive(false);
                         OnHit(5);   // Get damage
+                        Destroy(Monster);
                         yield return new WaitForSeconds(2f);
                         // TODO: Hit Effect
 
