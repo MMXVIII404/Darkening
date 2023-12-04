@@ -165,7 +165,7 @@ public class AimOnTarget : MonoBehaviour
                     {
                         displayText.GetComponent<TMP_Text>().text = "Monster caught!";
                         checkArea.gameObject.SetActive(false);
-                        Monster.GetComponent<Monster>().AssignNameToSlot();
+                        Monster.GetComponent<Monster>().AssignMonsterToSlot();
                         yield return new WaitForSeconds(2f); // 等待2秒
                                                              // TODO: Add some VFX to destroy the monster
                         Destroy(Monster); // 假设您要销毁怪物对象

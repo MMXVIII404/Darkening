@@ -52,6 +52,9 @@ public class MonsterDescription : MonoBehaviour
             case "Monster 3":
                 monsterImage.sprite = Resources.Load<Sprite>("Sprites/Monster3");
                 break;
+            default:
+                monsterImage.sprite = Resources.Load<Sprite>("Sprites/Unknown");
+                break;
         }
     }
 }
