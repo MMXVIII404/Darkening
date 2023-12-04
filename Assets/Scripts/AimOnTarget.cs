@@ -129,9 +129,8 @@ public class AimOnTarget : MonoBehaviour
     {
         float distanceToCheckArea = Vector2.Distance(checkAreaPostion, new Vector2(Screen.width / 2, Screen.height / 2));
 
-        float radius = checkArea.rectTransform.sizeDelta.x * 0.5f;
-
-        return distanceToCheckArea <= radius; ;
+        float radius = checkArea.rectTransform.sizeDelta.x * 0.5f + 50f;
+        return distanceToCheckArea <= radius;
     }
 
     IEnumerator StartCatching(GameObject Monster)
@@ -200,8 +199,6 @@ public class AimOnTarget : MonoBehaviour
                 break;
             }
             yield return null;
-
-            Debug.Log(stayTime);
         }
 
         
