@@ -28,7 +28,7 @@ public class AimOnTarget : MonoBehaviour
     bool startCatching = false;
     int San = 100;
     GameObject currentMonster;
-    Vector2 checkAreaPostion;
+    Vector2 checkAreaPosition;
 
     //public Button catchButton;
 
@@ -121,13 +121,13 @@ public class AimOnTarget : MonoBehaviour
     {
         if (currentMonster != null)
         {
-            checkAreaPostion = RectTransformUtility.WorldToScreenPoint(mainCamera, currentMonster.transform.position);    // Monster postion on screen
-            checkArea.GetComponent<RectTransform>().position = checkAreaPostion;   // Check area follow the Monster position on screen
+            checkAreaPosition = RectTransformUtility.WorldToScreenPoint(mainCamera, currentMonster.transform.position);    // Monster postion on screen
+            checkArea.GetComponent<RectTransform>().position = checkAreaPosition;   // Check area follow the Monster position on screen
         }
     }
     private bool IsPointInsideCheckArea(GameObject Monster)
     {
-        float distanceToCheckArea = Vector2.Distance(checkAreaPostion, new Vector2(Screen.width / 2, Screen.height / 2));
+        float distanceToCheckArea = Vector2.Distance(checkAreaPosition, new Vector2(Screen.width / 2, Screen.height / 2));
 
         float radius = checkArea.rectTransform.sizeDelta.x * 0.5f + 50f;
         return distanceToCheckArea <= radius;
