@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using TMPro;
 
 public class SimplePlayer : MonoBehaviour 
 {
@@ -22,7 +23,10 @@ public class SimplePlayer : MonoBehaviour
 
     void Update ()
     {
-        HP += recoverSpeed * Time.deltaTime;
+        if(Input.GetKeyDown(KeyCode.Space)){
+            Damage(10);
+        }
+        // HP += recoverSpeed * Time.deltaTime;
         if (HP > maxHP)
         {
             HP = maxHP;
