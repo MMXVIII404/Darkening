@@ -18,6 +18,8 @@ public class AimOnTarget : MonoBehaviour
     public Slider checkAreaSlider;
     public event Action onHitAction;
 
+    public Battery battery;
+
     bool buttonPressed = false;
     bool inRange = false;
     string currentMonsterName = string.Empty;
@@ -43,6 +45,7 @@ public class AimOnTarget : MonoBehaviour
         CountTime();
         PointAtMonster();
         FollowMonster();
+        Debug.Log(buttonPressed);
     }
 
 
@@ -51,6 +54,10 @@ public class AimOnTarget : MonoBehaviour
         if (inRange)
         {
             buttonPressed = true;
+        }
+        else
+        {
+            battery.UseBattery(0.05f);
         }
     }
 
@@ -158,7 +165,7 @@ public class AimOnTarget : MonoBehaviour
                 displayText.GetComponent<TMP_Text>().text = $"Scanning... {stayTime:F1}";
                 stayTime += Time.deltaTime;
                 checkAreaSlider.value = stayTime / 5f;
-
+                battery.UseBattery(Time.deltaTime * 0.02f);
                 if (stayTime >= 5f)
                 {
                     if (currentMonster.CompareTag("TrueMonster"))
