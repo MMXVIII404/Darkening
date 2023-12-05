@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
@@ -37,13 +38,16 @@ public class PlaneDetectionManager : MonoBehaviour
     [SerializeField]
     private bool isButtonBegin;
     List<Vector2> boundaryPoints = new List<Vector2>();
+    public GameObject preScanText;
     public void OnButtonBegin()
     {
         isButtonBegin = true;
+        preScanText.SetActive(false);
     }
 
     void Start()
     {
+        preScanText.SetActive(true);
         fakeMonstersFront = new GameObject[(int)maxMonsters.x * 2];
         fakeMonstersBack = new GameObject[(int)maxMonsters.y * 2];
         trueMonsterNumber = Random.Range(3, (int)maxMonsters.x * 2 - 1);
