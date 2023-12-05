@@ -31,7 +31,7 @@ public class AimOnTarget : MonoBehaviour
     Vector2 checkAreaPosition;
 
     //public Button catchButton;
-
+    //111
     void Start()
     {
         // mainCamera = Camera.main;
