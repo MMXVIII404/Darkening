@@ -43,6 +43,11 @@ public class PlaneDetectionManager : MonoBehaviour
     {
         isButtonBegin = true;
         preScanText.SetActive(false);
+        if (smokeEffect != null)
+        {
+            // Debug.Log(1);
+            smokeEffect.SetActive(true);
+        }
     }
 
     void Start()
@@ -51,8 +56,9 @@ public class PlaneDetectionManager : MonoBehaviour
         fakeMonstersFront = new GameObject[(int)maxMonsters.x * 2];
         fakeMonstersBack = new GameObject[(int)maxMonsters.y * 2];
         trueMonsterNumber = Random.Range(3, (int)maxMonsters.x * 2 - 1);
-        forwardOrBack = (trueMonsterNumber - (int)maxMonsters.x) >= 0? false : true;
-        if(!forwardOrBack){
+        forwardOrBack = (trueMonsterNumber - (int)maxMonsters.x) >= 0 ? false : true;
+        if (!forwardOrBack)
+        {
             trueMonsterNumber -= (int)maxMonsters.x;
         }
         addOnce = true;
@@ -97,31 +103,36 @@ public class PlaneDetectionManager : MonoBehaviour
                         //deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
                         //float fps = 1.0f / deltaTime;
                         monsterStart++;
-                        if (monsterStart > 60){
+                        if (monsterStart > 60)
+                        {
                             monsterStart = 0.0f;
                             addOnce = true;
-                            if (addOnce){
-                            monsterStartCount ++;
-                            addOnce = false;
-                            }
-                            for(int i = 0; i < monsterStartCount; i++){
-                                if ( plane.transform.position.z - mainCamera.transform.position.z > 0)
+                            if (addOnce)
                             {
-                                if(currentMonsters.x >= 1 ){
-                                    foreach (var point in plane.boundary)
+                                monsterStartCount++;
+                                addOnce = false;
+                            }
+                            for (int i = 0; i < monsterStartCount; i++)
+                            {
+                                if (plane.transform.position.z - mainCamera.transform.position.z > 0)
                                 {
-                                    boundaryPoints.Add(point);
-                                }
-                                Vector2 randomPoint = RandomPointInPolygon(boundaryPoints);
-                                float randomHeight = Random.Range(0,maxGenerateHeight);
-                                Vector3 randomPoint3D = plane.transform.TransformPoint(new Vector3(randomPoint.x, randomHeight, randomPoint.y));
-                                Debug.Log(randomPoint3D);
-                                fakeMonstersFront[monsterCountFront] = Instantiate(fakeMonsterPrefab, randomPoint3D, mainCamera.transform.rotation);
-                                monsterCountFront++;
-                                currentMonsters.x -= 1;
-                                if (currentMonsters.x == 0)
-                                {
-                                    if(forwardOrBack){
+                                    if (currentMonsters.x >= 1)
+                                    {
+                                        foreach (var point in plane.boundary)
+                                        {
+                                            boundaryPoints.Add(point);
+                                        }
+                                        Vector2 randomPoint = RandomPointInPolygon(boundaryPoints);
+                                        float randomHeight = Random.Range(0, maxGenerateHeight);
+                                        Vector3 randomPoint3D = plane.transform.TransformPoint(new Vector3(randomPoint.x, randomHeight, randomPoint.y));
+                                        Debug.Log(randomPoint3D);
+                                        fakeMonstersFront[monsterCountFront] = Instantiate(fakeMonsterPrefab, randomPoint3D, mainCamera.transform.rotation);
+                                        monsterCountFront++;
+                                        currentMonsters.x -= 1;
+                                        if (currentMonsters.x == 0)
+                                        {
+                                            if (forwardOrBack)
+                                            {
                                                 Debug.Log("1");
                                                 /* if (trueMonsterNumber >= 1)
                                                  {
@@ -133,29 +144,31 @@ public class PlaneDetectionManager : MonoBehaviour
                                                  }*/
                                                 Instantiate(trueMonsterPrefab, fakeMonstersFront[trueMonsterNumber - 1].transform.position, mainCamera.transform.rotation);
                                                 Destroy(fakeMonstersFront[trueMonsterNumber - 1]);
- 
+
+                                            }
+                                            //isButtonBegin = false;
+                                        }
                                     }
-                                    //isButtonBegin = false;
+
                                 }
-                                }
-                                
-                            }
-                            else if ( plane.transform.position.z - mainCamera.transform.position.z < 0)
-                            {
-                                if(currentMonsters.y >= 1){
-                                    foreach (var point in plane.boundary)
+                                else if (plane.transform.position.z - mainCamera.transform.position.z < 0)
                                 {
-                                    boundaryPoints.Add(point);
-                                }
-                                Vector2 randomPoint = RandomPointInPolygon(boundaryPoints);
-                                float randomHeight = Random.Range(0,maxGenerateHeight);
-                                Vector3 randomPoint3D = plane.transform.TransformPoint(new Vector3(randomPoint.x, randomHeight, randomPoint.y));
-                                fakeMonstersBack[monsterCountBack] = Instantiate(fakeMonsterPrefab, mainCamera.transform.position - new Vector3(0, 0, 1) * 2f, mainCamera.transform.rotation);
-                                monsterCountBack++;
-                                currentMonsters.y -= 1;
-                                if (currentMonsters.y == 0)
-                                {
-                                    if(!forwardOrBack){
+                                    if (currentMonsters.y >= 1)
+                                    {
+                                        foreach (var point in plane.boundary)
+                                        {
+                                            boundaryPoints.Add(point);
+                                        }
+                                        Vector2 randomPoint = RandomPointInPolygon(boundaryPoints);
+                                        float randomHeight = Random.Range(0, maxGenerateHeight);
+                                        Vector3 randomPoint3D = plane.transform.TransformPoint(new Vector3(randomPoint.x, randomHeight, randomPoint.y));
+                                        fakeMonstersBack[monsterCountBack] = Instantiate(fakeMonsterPrefab, mainCamera.transform.position - new Vector3(0, 0, 1) * 2f, mainCamera.transform.rotation);
+                                        monsterCountBack++;
+                                        currentMonsters.y -= 1;
+                                        if (currentMonsters.y == 0)
+                                        {
+                                            if (!forwardOrBack)
+                                            {
                                                 Debug.Log("2");
                                                 /*if (trueMonsterNumber >= 1)
                                                 {
@@ -169,28 +182,27 @@ public class PlaneDetectionManager : MonoBehaviour
                                                 Instantiate(trueMonsterPrefab, fakeMonstersBack[trueMonsterNumber - 1].transform.position, mainCamera.transform.rotation);
                                                 Destroy(fakeMonstersBack[trueMonsterNumber - 1]);
                                             }
-                                    //isButtonBegin = false;
+                                            //isButtonBegin = false;
+                                        }
+                                    }
                                 }
+                                if (i == monsterStartCount - 1)
+                                {  //这里可能没有-1，具体需要调试
+                                   //monsterStart = 0.0f;
+                                   //addOnce = true;
                                 }
-                            }
-                            if(i == monsterStartCount -1){  //这里可能没有-1，具体需要调试
-                            //monsterStart = 0.0f;
-                            //addOnce = true;
-                            }
                             }
                             //monsterStart = 0.0f;
                             //addOnce = true;
 
 
                         }
-                            
+
                     }
                 }
                 else if (plane.alignment == PlaneAlignment.Vertical)
                 {
-                    if(smokeEffect != null){
-                        smokeEffect.GetComponent<ParticleSystem>().Play();
-                    }
+
                     // TODO : generate vine effect;
                 }
 
