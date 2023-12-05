@@ -11,7 +11,7 @@ public class SimplePlayer : MonoBehaviour
     [SerializeField]
     private float damageBloodAmount = 3; //amount of blood when taking damage (relative to damage taken (relative to HP remaining))
     [SerializeField]
-    private float maxBloodIndication = 0.5f; //max amount of blood when not taking damage (relative to HP lost)
+    private float maxBloodIndication = 0.75f; //max amount of blood when not taking damage (relative to HP lost)
 
     [SerializeField]
     float recoverSpeed = 1;//HP per second
@@ -23,9 +23,9 @@ public class SimplePlayer : MonoBehaviour
 
     void Update ()
     {
-        if(Input.GetKeyDown(KeyCode.Space)){
+        /*if(Input.GetKeyDown(KeyCode.Space)){
             Damage(10);
-        }
+        }*/
         // HP += recoverSpeed * Time.deltaTime;
         if (HP > maxHP)
         {

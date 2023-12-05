@@ -17,6 +17,7 @@ public class AimOnTarget : MonoBehaviour
     public Image checkArea;
     public Slider checkAreaSlider;
     public event Action onHitAction;
+    public SimplePlayer sanEffect;
 
     public Battery battery;
 
@@ -182,7 +183,7 @@ public class AimOnTarget : MonoBehaviour
                     {
                         displayText.GetComponent<TMP_Text>().text = "Fake Monster!";
                         checkArea.gameObject.SetActive(false);
-                        OnHit(5);   // Get damage
+                        OnHit(33);   // Get damage
                         Destroy(Monster);
                         yield return new WaitForSeconds(2f);
                         // TODO: Hit Effect
@@ -197,7 +198,7 @@ public class AimOnTarget : MonoBehaviour
                 displayText.GetComponent<TMP_Text>().text = "Monster escaped!";
                 checkArea.gameObject.SetActive(false);
                 // TODO: Hit Effect
-                OnHit(5);   // Get damage
+                OnHit(33);   // Get damage
                 yield return new WaitForSeconds(2f); // 等待2秒
 
 
@@ -222,7 +223,7 @@ public class AimOnTarget : MonoBehaviour
     void OnHit(int damage)
     {
         San -= damage;
-
+        sanEffect.Damage(damage);
         onHitAction?.Invoke();
 
         if (San <= 0)

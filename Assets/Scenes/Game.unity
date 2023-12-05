@@ -422,7 +422,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &22629829
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1202,6 +1202,7 @@ GameObject:
   - component: {fileID: 272553339}
   - component: {fileID: 272553338}
   - component: {fileID: 272553343}
+  - component: {fileID: 272553344}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1476,6 +1477,30 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!114 &272553344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 272553336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 111147cff0ad1a94aafcd607c33cb045, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TestingBloodAmount: 0.7
+  EdgeSharpness: 3
+  minAlpha: 0.2
+  maxAlpha: 0.7
+  distortion: 0.25
+  autoFadeOut: 1
+  autoFadeOutAbsReduc: 0.05
+  autoFadeOutRelReduc: 0.5
+  updateSpeed: 20
+  Image: {fileID: 2800000, guid: 07536878954ee034295e46c482f9ddae, type: 3}
+  Normals: {fileID: 2800000, guid: d6a4e510717eae7478cfc7e28099e214, type: 3}
+  Shader: {fileID: 4800000, guid: 1899c349878167040bd0fd1c3cfc7c79, type: 3}
 --- !u!1 &276511756
 GameObject:
   m_ObjectHideFlags: 0
@@ -2304,7 +2329,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7290829633726956438, guid: f50860f6e319c2e4bae8453e4fe83791, type: 3}
       propertyPath: m_TagString
-      value: TrueMonster
+      value: Monster
       objectReference: {fileID: 0}
     - target: {fileID: 7955021881690528044, guid: f50860f6e319c2e4bae8453e4fe83791, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3289,7 +3314,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7290829633726956438, guid: f50860f6e319c2e4bae8453e4fe83791, type: 3}
       propertyPath: m_TagString
-      value: TrueMonster
+      value: Monster
       objectReference: {fileID: 0}
     - target: {fileID: 7955021881690528044, guid: f50860f6e319c2e4bae8453e4fe83791, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3397,10 +3422,10 @@ RectTransform:
   - {fileID: 340364308}
   m_Father: {fileID: 1268377581}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 150, y: -50}
+  m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &697683064
 MonoBehaviour:
@@ -6610,6 +6635,7 @@ GameObject:
   - component: {fileID: 1314599429}
   - component: {fileID: 1314599428}
   - component: {fileID: 1314599430}
+  - component: {fileID: 1314599431}
   m_Layer: 0
   m_Name: GameLogic
   m_TagString: Untagged
@@ -6638,6 +6664,7 @@ MonoBehaviour:
   displayText: {fileID: 1261088723}
   checkArea: {fileID: 634286525}
   checkAreaSlider: {fileID: 1764697134}
+  sanEffect: {fileID: 1314599431}
   battery: {fileID: 1289506133}
 --- !u!4 &1314599429
 Transform:
@@ -6673,6 +6700,22 @@ MonoBehaviour:
   minGrow: 0.2
   maxGrow: 0.97
   allowGrow: 0
+--- !u!114 &1314599431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1314599427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7543af0b71f47c448a224d1373a34e9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 100
+  damageBloodAmount: 5
+  maxBloodIndication: 1.2
+  recoverSpeed: 1
 --- !u!1 &1316289187
 GameObject:
   m_ObjectHideFlags: 0
@@ -7548,10 +7591,10 @@ RectTransform:
   - {fileID: 787058937}
   m_Father: {fileID: 1268377581}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 150, y: -190}
+  m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1732618724
 MonoBehaviour:
@@ -7699,10 +7742,10 @@ RectTransform:
   - {fileID: 512605792}
   m_Father: {fileID: 1268377581}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 150, y: -330}
+  m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1740327777
 MonoBehaviour:
@@ -15090,7 +15133,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7290829633726956438, guid: f50860f6e319c2e4bae8453e4fe83791, type: 3}
       propertyPath: m_TagString
-      value: TrueMonster
+      value: Monster
       objectReference: {fileID: 0}
     - target: {fileID: 7955021881690528044, guid: f50860f6e319c2e4bae8453e4fe83791, type: 3}
       propertyPath: m_LocalPosition.x
