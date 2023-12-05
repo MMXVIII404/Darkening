@@ -3487,7 +3487,6 @@ GameObject:
   m_Component:
   - component: {fileID: 705507995}
   - component: {fileID: 705507994}
-  - component: {fileID: 705507996}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -3572,18 +3571,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!114 &705507996
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 705507993}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &709481002
 GameObject:
   m_ObjectHideFlags: 0
@@ -5205,7 +5192,7 @@ MonoBehaviour:
   smokeEffect: {fileID: 2464472393358965664, guid: 77d25f85aed2c4544a146de4d4a5f690, type: 3}
   fakeMonstersFront: []
   fakeMonstersBack: []
-  maxMonsters: {x: 6, y: 6}
+  maxMonsters: {x: 10, y: 10}
   trueMonsterNumber: 0
   forwardOrBack: 1
   monsterStart: 0
@@ -14713,6 +14700,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ARSmoke
       objectReference: {fileID: 0}
+    - target: {fileID: 2464472393358965664, guid: 77d25f85aed2c4544a146de4d4a5f690, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4337331360896203028, guid: 77d25f85aed2c4544a146de4d4a5f690, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -14754,7 +14745,15 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4749249584102145331, guid: 77d25f85aed2c4544a146de4d4a5f690, type: 3}
+      propertyPath: looping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4749249584102145331, guid: 77d25f85aed2c4544a146de4d4a5f690, type: 3}
       propertyPath: prewarm
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4749249584102145331, guid: 77d25f85aed2c4544a146de4d4a5f690, type: 3}
+      propertyPath: playOnAwake
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4749249584102145331, guid: 77d25f85aed2c4544a146de4d4a5f690, type: 3}

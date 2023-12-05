@@ -179,8 +179,8 @@ public class PlaneDetectionManager : MonoBehaviour
                                                     Destroy(fakeMonstersBack[0]);
                                                 }*/
                                                 //Instantiate(trueMonsterPrefab, randomPoint3D, mainCamera.transform.rotation);
-                                                Instantiate(trueMonsterPrefab, fakeMonstersBack[trueMonsterNumber - 1].transform.position, mainCamera.transform.rotation);
                                                 Destroy(fakeMonstersBack[trueMonsterNumber - 1]);
+                                                Instantiate(trueMonsterPrefab, fakeMonstersBack[trueMonsterNumber - 1].transform.position, mainCamera.transform.rotation);
                                             }
                                             //isButtonBegin = false;
                                         }
