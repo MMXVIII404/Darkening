@@ -16,6 +16,8 @@ public class FadeImage : MonoBehaviour
     public TextMeshProUGUI startText;
     public TextMeshProUGUI aboutText;
     public TextMeshProUGUI quitText;
+    public Image warning;
+    public FadeWarning fadeWarning;
     // 调用这个方法来开始淡出效果
     public void StartFading()
     {
@@ -53,6 +55,7 @@ public class FadeImage : MonoBehaviour
             quitText.color = color;
             yield return null;
         }
+        fadeWarning.StartShowing();
         startMenu.SetActive(false);
     }
 }
