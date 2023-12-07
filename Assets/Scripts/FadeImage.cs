@@ -13,6 +13,9 @@ public class FadeImage : MonoBehaviour
     public Image logo2Image;
     public GameObject startMenu;
     public TextMeshProUGUI header;
+    public TextMeshProUGUI startText;
+    public TextMeshProUGUI aboutText;
+    public TextMeshProUGUI quitText;
     // 调用这个方法来开始淡出效果
     public void StartFading()
     {
@@ -39,7 +42,15 @@ public class FadeImage : MonoBehaviour
             Color color = header.color;
             color.a = alpha;
             header.color = color;
-
+            color = startText.color;
+            color.a = alpha;
+            startText.color = color;
+            color = aboutText.color;
+            color.a = alpha;
+            aboutText.color = color;
+            color = quitText.color;
+            color.a = alpha;
+            quitText.color = color;
             yield return null;
         }
         startMenu.SetActive(false);
