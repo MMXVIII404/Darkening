@@ -7,11 +7,15 @@ public class Monster : MonoBehaviour
 {
     public GameObject slots; // 父 GameObject
 
+    private void Start()
+    {
+        slots = GameObject.Find("Album").transform.GetChild(0).GetChild(0).GetChild(1).GetChild(0).GetChild(0).gameObject;
+    }
     public void AssignMonsterToSlot()
     {
         for (int i = 0; i < slots.transform.childCount; i++)
         {
-            GameObject child = slots.transform.GetChild(i).GetChild(0).gameObject;
+            GameObject child = slots.transform.GetChild(i).gameObject;
             MonsterSlot slot = child.GetComponent<MonsterSlot>();
 
             if (slot != null && !slot.GetContainStatus())
@@ -22,13 +26,13 @@ public class Monster : MonoBehaviour
                 switch (gameObject.name)
                 {
                     case "Monster 1":
-                        child.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Monster1");
+                        child.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Monster1");
                         break;
                     case "Monster 2":
-                        child.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Monster2");
+                        child.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Monster2");
                         break;
                     case "Monster 3":
-                        child.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Monster3");
+                        child.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Monster3");
                         break;
                 }
                 break; // 赋值成功后退出循环

@@ -18,7 +18,7 @@ public class AimOnTarget : MonoBehaviour
     public Slider checkAreaSlider;
     public event Action onHitAction;
     public SimplePlayer sanEffect;
-
+    public Button beginButton;
     public Battery battery;
 
     bool buttonPressed = false;
@@ -175,6 +175,7 @@ public class AimOnTarget : MonoBehaviour
                         checkArea.gameObject.SetActive(false);
                         Monster.GetComponent<Monster>().AssignMonsterToSlot();
                         yield return new WaitForSeconds(2f); // 等待2秒
+                        beginButton.gameObject.SetActive(true);
                                                              // TODO: Add some VFX to destroy the monster
                         Destroy(Monster); // 假设您要销毁怪物对象
                         break; // 成功捕捉，退出循环
