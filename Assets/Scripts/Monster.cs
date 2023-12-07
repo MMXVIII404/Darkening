@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class Monster : MonoBehaviour
 {
-    public GameObject slots; // ¸¸ GameObject
-    public int monsterType = 1;
+    public GameObject slots; // ï¿½ï¿½ GameObject
+    public int MonsterType = 1;
 
     private void Start()
     {
@@ -21,24 +21,22 @@ public class Monster : MonoBehaviour
 
             if (slot != null && !slot.GetContainStatus())
             {
-                // Èç¹û GetContainStatus ·µ»Ø false£¬ÔòÉèÖÃÃû³Æ²¢µ÷ÓÃ SetContainStatus
+                // ï¿½ï¿½ï¿½ GetContainStatus ï¿½ï¿½ï¿½ï¿½ falseï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ²ï¿½ï¿½ï¿½ï¿½ï¿½ SetContainStatus
+                slot.SetName(this.name);
                 slot.SetContainStatus();
-                switch (monsterType)
+                switch (MonsterType)
                 {
                     case 1:
-                        slot.SetName("Monster 1");
                         child.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Monster1");
                         break;
                     case 2:
-                        slot.SetName("Monster 2");
                         child.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Monster2");
                         break;
                     case 3:
-                        slot.SetName("Monster 3");
                         child.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Monster3");
                         break;
                 }
-                break; // ¸³Öµ³É¹¦ºóÍË³öÑ­»·
+                break; // ï¿½ï¿½Öµï¿½É¹ï¿½ï¿½ï¿½ï¿½Ë³ï¿½Ñ­ï¿½ï¿½
             }
         }
     }
