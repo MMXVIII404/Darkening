@@ -11,7 +11,7 @@ public class AimOnTarget : MonoBehaviour
     public Camera mainCamera;
     public LayerMask monsterLayer;
     public float maxRaycastDistance = 100f;
-    public float checkRange = 3f;
+    public float checkRange = 2f;
     public GameObject displayText;
 
     public Image checkArea;

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
@@ -39,21 +40,25 @@ public class PlaneDetectionManager : MonoBehaviour
     private bool isButtonBegin;
     List<Vector2> boundaryPoints = new List<Vector2>();
     public GameObject preScanText;
+    private Transform smokeEffectPosition;
     public void OnButtonBegin()
     {
         isButtonBegin = true;
         preScanText.SetActive(false);
-        if (smokeEffect != null)
-        {
-            // Debug.Log(1);
-            smokeEffect.GetComponent<ParticleSystemRenderer>().enabled = true;
-        }
+        smokeEffect.transform.position= new Vector3(0,0,0);
+        //if (smokeEffect != null)
+        //{
+        //    //Debug.Log(1);
+        //    smokeEffect.GetComponent<ParticleSystemRenderer>().enabled = true;
+        //}
 
     }
 
     void Start()
     {
-        smokeEffect.GetComponent<ParticleSystemRenderer>().enabled = false;
+        //smokeEffectPosition = smokeEffect.transform;
+        smokeEffect.transform.position = new Vector3(1000.0f, 1000.0f, 1000.0f);
+        //smokeEffect.GetComponent<ParticleSystemRenderer>().enabled = false;
         preScanText.SetActive(true);
         fakeMonstersFront = new GameObject[(int)maxMonsters.x * 2];
         fakeMonstersBack = new GameObject[(int)maxMonsters.y * 2];
@@ -105,7 +110,7 @@ public class PlaneDetectionManager : MonoBehaviour
                         //deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
                         //float fps = 1.0f / deltaTime;
                         monsterStart++;
-                        if (monsterStart > 60)
+                        if (monsterStart > 120)
                         {
                             monsterStart = 0.0f;
                             addOnce = true;
