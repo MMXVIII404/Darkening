@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Monster : MonoBehaviour
 {
     public GameObject slots; // 父 GameObject
+    public int monsterType = 1;
 
     private void Start()
     {
@@ -21,22 +22,29 @@ public class Monster : MonoBehaviour
             if (slot != null && !slot.GetContainStatus())
             {
                 // 如果 GetContainStatus 返回 false，则设置名称并调用 SetContainStatus
-                slot.SetName(this.name);
                 slot.SetContainStatus();
-                switch (gameObject.name)
+                switch (monsterType)
                 {
-                    case "Monster 1":
+                    case 1:
+                        slot.SetName("Monster 1");
                         child.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Monster1");
                         break;
-                    case "Monster 2":
+                    case 2:
+                        slot.SetName("Monster 2");
                         child.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Monster2");
                         break;
-                    case "Monster 3":
+                    case 3:
+                        slot.SetName("Monster 3");
                         child.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Monster3");
                         break;
                 }
                 break; // 赋值成功后退出循环
             }
         }
+    }
+
+    public void SetMonsterTyoe(int monsterType)
+    {
+        this.monsterType = monsterType;
     }
 }

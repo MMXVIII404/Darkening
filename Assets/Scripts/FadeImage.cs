@@ -27,5 +27,6 @@ public class FadeImage : MonoBehaviour
             image.color = new Color(startColor.r, startColor.g, startColor.b, alpha);
             yield return null;
         }
+        startMenu.SetActive(false);
     }
 }
