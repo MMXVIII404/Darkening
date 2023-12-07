@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Monster : MonoBehaviour
 {
     public GameObject slots; // �� GameObject
-    public int MonsterType = 1;
+    public int monsterType = 1;
 
     private void Start()
     {
@@ -24,7 +24,7 @@ public class Monster : MonoBehaviour
                 // ��� GetContainStatus ���� false�����������Ʋ����� SetContainStatus
                 slot.SetName(this.name);
                 slot.SetContainStatus();
-                switch (MonsterType)
+                switch (monsterType)
                 {
                     case 1:
                         child.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Monster1");
@@ -39,5 +39,10 @@ public class Monster : MonoBehaviour
                 break; // ��ֵ�ɹ����˳�ѭ��
             }
         }
+    }
+
+    public void SetMonsterTyoe(int monsterType)
+    {
+        this.monsterType = monsterType;
     }
 }
