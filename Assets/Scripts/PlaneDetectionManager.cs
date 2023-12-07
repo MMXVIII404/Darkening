@@ -43,17 +43,19 @@ public class PlaneDetectionManager : MonoBehaviour
     {
         isButtonBegin = true;
         preScanText.SetActive(false);
-        if (smokeEffect != null)
-        {
-            // Debug.Log(1);
-            smokeEffect.GetComponent<ParticleSystemRenderer>().enabled = true;
-        }
+        smokeEffect.transform.position = new Vector3(0,0,0);
+        // if (smokeEffect != null)
+        // {
+        //     // Debug.Log(1);
+        //     smokeEffect.GetComponent<ParticleSystemRenderer>().enabled = true;
+        // }
 
     }
 
     void Start()
     {
-        smokeEffect.GetComponent<ParticleSystemRenderer>().enabled = false;
+        smokeEffect.transform.position = new Vector3(1000,1000,1000);
+        // smokeEffect.GetComponent<ParticleSystemRenderer>().enabled = false;
         preScanText.SetActive(true);
         fakeMonstersFront = new GameObject[(int)maxMonsters.x * 2];
         fakeMonstersBack = new GameObject[(int)maxMonsters.y * 2];
@@ -105,7 +107,7 @@ public class PlaneDetectionManager : MonoBehaviour
                         //deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
                         //float fps = 1.0f / deltaTime;
                         monsterStart++;
-                        if (monsterStart > 60)
+                        if (monsterStart > 30)
                         {
                             monsterStart = 0.0f;
                             addOnce = true;
