@@ -42,7 +42,7 @@ public class PlaneDetectionManager : MonoBehaviour
     public void OnButtonBegin()
     {
         isButtonBegin = true;
-        preScanText.SetActive(false);
+        preScanText.GetComponent<ParticleSystemRenderer>().enabled = true;
         if (smokeEffect != null)
         {
             // Debug.Log(1);
@@ -52,7 +52,7 @@ public class PlaneDetectionManager : MonoBehaviour
 
     void Start()
     {
-        preScanText.SetActive(true);
+        preScanText.GetComponent<ParticleSystemRenderer>().enabled = false;
         fakeMonstersFront = new GameObject[(int)maxMonsters.x * 2];
         fakeMonstersBack = new GameObject[(int)maxMonsters.y * 2];
         trueMonsterNumber = Random.Range(3, (int)maxMonsters.x * 2 - 1);
