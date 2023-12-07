@@ -67,7 +67,7 @@ PrefabInstance:
     - target: {fileID: -3652435421679982977, guid: 2114005e909c9834583b8130b3bd5321, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: e6c9377891576d6448acd6ab16d0ece6, type: 2}
+      objectReference: {fileID: 2100000, guid: 89969065733a37048acb47930e74a0be, type: 2}
     - target: {fileID: 919132149155446097, guid: 2114005e909c9834583b8130b3bd5321, type: 3}
       propertyPath: m_Name
       value: Eye_Fake
@@ -83,11 +83,11 @@ PrefabInstance:
     - target: {fileID: 1622171205016844713, guid: 2114005e909c9834583b8130b3bd5321, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: e6c9377891576d6448acd6ab16d0ece6, type: 2}
+      objectReference: {fileID: 2100000, guid: 89969065733a37048acb47930e74a0be, type: 2}
     - target: {fileID: 5128991679919596570, guid: 2114005e909c9834583b8130b3bd5321, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: e6c9377891576d6448acd6ab16d0ece6, type: 2}
+      objectReference: {fileID: 2100000, guid: 89969065733a37048acb47930e74a0be, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -157,6 +157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slots: {fileID: 0}
+  monsterType: 1
 --- !u!1 &4423053800470720609 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 44844963069319038, guid: 2114005e909c9834583b8130b3bd5321, type: 3}
