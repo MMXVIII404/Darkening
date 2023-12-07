@@ -11,7 +11,7 @@ public class Monster : MonoBehaviour
     {
         for (int i = 0; i < slots.transform.childCount; i++)
         {
-            GameObject child = slots.transform.GetChild(i).gameObject;
+            GameObject child = slots.transform.GetChild(i).GetChild(0).gameObject;
             MonsterSlot slot = child.GetComponent<MonsterSlot>();
 
             if (slot != null && !slot.GetContainStatus())
