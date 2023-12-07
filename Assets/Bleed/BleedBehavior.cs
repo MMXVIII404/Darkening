@@ -26,12 +26,14 @@ public class BleedBehavior : MonoBehaviour
     public Shader Shader; //ImageBlendEffect.shader
 	
 	private Material _material;
+    public Vector4 uvScale = new Vector4(1, 1,0,0);
 
 	private void Awake()
 	{
         _material = new Material(Shader);
         _material.SetTexture("_BlendTex", Image);
         _material.SetTexture("_BumpMap", Normals);
+        _material.SetVector("_UVScale", uvScale);
 	}
 
     public void Update()
@@ -50,7 +52,7 @@ public class BleedBehavior : MonoBehaviour
         {
             _material.SetTexture("_BlendTex", Image);
             _material.SetTexture("_BumpMap", Normals);
-
+            _material.SetVector("_UVScale", uvScale);
             //float newBlendAmount = Mathf.Clamp01(Mathf.Clamp01(TestingBloodAmount) * (maxAlpha - minAlpha) + minAlpha);
             //newBlendAmount = newBlendAmount * (1 - minBloodAmount) + minBloodAmount;
             float newBlendAmount = Mathf.Clamp01(TestingBloodAmount) * (1 - minBloodAmount) + minBloodAmount;
@@ -61,6 +63,7 @@ public class BleedBehavior : MonoBehaviour
         }
         else
         {
+            _material.SetVector("_UVScale", uvScale);
             //float newBlendAmount = Mathf.Clamp01(Mathf.Clamp01(BloodAmount) * (maxAlpha - minAlpha) + minAlpha);
             //newBlendAmount = newBlendAmount * (1 - minBloodAmount) + minBloodAmount;
             float newBlendAmount = Mathf.Clamp01(BloodAmount) * (1 - minBloodAmount) + minBloodAmount;
