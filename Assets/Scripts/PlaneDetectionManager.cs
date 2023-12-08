@@ -4,6 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using Unity.XR.CoreUtils;
 using UnityEngine;
+using UnityEngine.UIElements;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
@@ -46,6 +47,7 @@ public class PlaneDetectionManager : MonoBehaviour
     private bool breakAllLoops = false;
     private AudioSource switchPositionAudioSource;
 
+    private Transform smokeEffectPosition;
     public void OnButtonBegin()
     {
         isButtonBegin = true;
