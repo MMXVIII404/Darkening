@@ -1,6 +1,8 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using Unity.XR.CoreUtils;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
@@ -10,22 +12,19 @@ public class PlaneDetectionManager : MonoBehaviour
     ARPlaneManager planeManager;
     public GameObject fakeMonsterPrefab;
     [SerializeField]
-    private int monsterCountFront;
+    private int monsterCount;
     [SerializeField]
     private int monsterCountBack;
     public GameObject trueMonsterPrefab;
     public GameObject smokeEffect;
     private Camera mainCamera;
     [SerializeField]
-    private GameObject[] fakeMonstersFront;
+    private GameObject[] fakeMonsters;
     [SerializeField]
-    private GameObject[] fakeMonstersBack;
     private int i = 0;
-    public Vector2 maxMonsters = new Vector2(25f, 25f);
+    public int maxMonsters = 6;
     [SerializeField]
     private int trueMonsterNumber;
-    [SerializeField]
-    private bool forwardOrBack = true;
     [SerializeField]
     private float monsterStart = 0.0f;
     private int monsterStartCount = 0;
@@ -33,17 +32,25 @@ public class PlaneDetectionManager : MonoBehaviour
     private float deltaTime = 0.0f;
     public float maxGenerateHeight = 3.0f; //TODO: 改成预扫描要扫到天花板/实时更新当前最高的horzitonal plane + 2f为最高生成高度
     [SerializeField]
-    private Vector2 currentMonsters = Vector2.zero;
+    private int currentMonsters = 0;
     private HashSet<ARPlane> processedPlanes = new HashSet<ARPlane>();
     [SerializeField]
     private bool isButtonBegin;
     List<Vector2> boundaryPoints = new List<Vector2>();
     public GameObject preScanText;
+    private bool firstInit = true;
+    private GameObject firstFakeMonster;
+    private bool allowInit = false;
+    public Texture fakeMonsterMainTexture;
+    public Texture trueMonsterMainTexture;
+    private bool breakAllLoops = false;
+    private AudioSource switchPositionAudioSource;
+
     public void OnButtonBegin()
     {
         isButtonBegin = true;
         preScanText.SetActive(false);
-        smokeEffect.transform.position = new Vector3(0,0,0);
+        smokeEffect.transform.position = new Vector3(0, 0, 0);
         // if (smokeEffect != null)
         // {
         //     // Debug.Log(1);
@@ -54,17 +61,13 @@ public class PlaneDetectionManager : MonoBehaviour
 
     void Start()
     {
-        smokeEffect.transform.position = new Vector3(1000,1000,1000);
+        firstInit = true;
+        allowInit = false;
+        smokeEffect.transform.position = new Vector3(1000, 1000, 1000);
         // smokeEffect.GetComponent<ParticleSystemRenderer>().enabled = false;
         preScanText.SetActive(true);
-        fakeMonstersFront = new GameObject[(int)maxMonsters.x * 2];
-        fakeMonstersBack = new GameObject[(int)maxMonsters.y * 2];
-        trueMonsterNumber = Random.Range(3, (int)maxMonsters.x * 2 - 1);
-        forwardOrBack = (trueMonsterNumber - (int)maxMonsters.x) >= 0 ? false : true;
-        if (!forwardOrBack)
-        {
-            trueMonsterNumber -= (int)maxMonsters.x;
-        }
+        fakeMonsters = new GameObject[maxMonsters * 2];
+        trueMonsterNumber = Random.Range(3, maxMonsters - 2);
         addOnce = true;
         monsterStartCount = 0;
         currentMonsters = maxMonsters;
@@ -77,37 +80,72 @@ public class PlaneDetectionManager : MonoBehaviour
     }
     private void Update()
     {
+        // Debug.Log(planeManager.trackables.count);
+    }
+    private IEnumerator DelayDestroy()
+    {
+        yield return new WaitForSeconds(2f);
+        firstFakeMonster.transform.GetChild(0).GetComponent<Renderer>().material.SetTexture("_MainTex", trueMonsterMainTexture);
+        firstFakeMonster.tag = "TrueMonster";
+        // Destroy(firstFakeMonster);
+        // Instantiate(trueMonsterPrefab, mainCamera.transform.position + mainCamera.transform.forward * 1f, mainCamera.transform.rotation);
+        allowInit = true;
+    }
+    private IEnumerator SwitchTrueMonster()
+    {
+        for (int j = 0; j < monsterCount; j++)
+        {
+            if (j == 0)
+            {
+                firstFakeMonster.transform.GetChild(0).GetComponent<Renderer>().material.SetTexture("_MainTex", fakeMonsterMainTexture);
+                firstFakeMonster.tag = "Monster";
+            }
+            if (j == trueMonsterNumber)
+            {
+                fakeMonsters[j].tag = "TrueMonster";
+                fakeMonsters[j].transform.GetChild(0).GetComponent<Renderer>().material.SetTexture("_MainTex", trueMonsterMainTexture);
+                // Transform transformBackup = fakeMonsters[j].transform;
+                // Destroy(fakeMonsters[j]);
+                // Instantiate(trueMonsterPrefab, transformBackup.position, transformBackup.rotation);
+                // breakAllLoops = true;
+                break;
+            }
+            // if(breakAllLoops){
+            //     break;
+            // }
+            switchPositionAudioSource.PlayOneShot(switchPositionAudioSource.clip);
+            fakeMonsters[j].transform.GetChild(0).GetComponent<Renderer>().material.SetTexture("_MainTex", trueMonsterMainTexture);
+            yield return new WaitForSeconds(0.5f);
+            fakeMonsters[j].transform.GetChild(0).GetComponent<Renderer>().material.SetTexture("_MainTex", fakeMonsterMainTexture);
+            if (j == monsterCount - 1)
+            {
+                StopCoroutine(SwitchTrueMonster());
+            }
+        }
     }
 
-    void OnPlanesChanged(ARPlanesChangedEventArgs args)
+    private void OnPlanesChanged(ARPlanesChangedEventArgs args)
     {
         foreach (var plane in args.added)
         {
-            // Debug.Log(1);
-            // 处理新检测到的平面
         }
 
         foreach (var plane in args.updated)
         {
-            // if (!processedPlanes.Contains(plane))
-            // {
-            // Debug.Log(plane.transform.position.z - mainCamera.transform.position.z);
-            // Debug.Log("size:" + plane.size);
-            // plane.alignmnt
-            // if (plane.transform.position.y < mainCamera.transform.position.y - 0.8f && plane.size.x > 1.5f && plane.size.y > 1.5f)
-            // {
-
-            // plane.transform.position.y -= 0.3f;
             if (isButtonBegin)
             {
-                if (plane.alignment == PlaneAlignment.HorizontalUp)
+                if (plane.alignment == PlaneAlignment.HorizontalUp && planeManager.trackables.count >= 3)
                 {
-                    if (true) //plane.size.x > 1.5f && plane.size.y > 1.5f
+                    if (firstInit)
                     {
-                        //deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
-                        //float fps = 1.0f / deltaTime;
+                        firstInit = false;
+                        firstFakeMonster = Instantiate(fakeMonsterPrefab, mainCamera.transform.position + mainCamera.transform.forward * 1f, mainCamera.transform.rotation);
+                        StartCoroutine(DelayDestroy());
+                    }
+                    if (allowInit) //plane.size.x > 1.5f && plane.size.y > 1.5f
+                    {
                         monsterStart++;
-                        if (monsterStart > 30)
+                        if (monsterStart > 45)
                         {
                             monsterStart = 0.0f;
                             addOnce = true;
@@ -118,88 +156,28 @@ public class PlaneDetectionManager : MonoBehaviour
                             }
                             for (int i = 0; i < monsterStartCount; i++)
                             {
-                                if (plane.transform.position.z - mainCamera.transform.position.z > 0)
+                                if (currentMonsters >= 1)
                                 {
-                                    if (currentMonsters.x >= 1)
+                                    foreach (var point in plane.boundary)
                                     {
-                                        foreach (var point in plane.boundary)
-                                        {
-                                            boundaryPoints.Add(point);
-                                        }
-                                        Vector2 randomPoint = RandomPointInPolygon(boundaryPoints);
-                                        float randomHeight = Random.Range(0, maxGenerateHeight);
-                                        Vector3 randomPoint3D = plane.transform.TransformPoint(new Vector3(randomPoint.x, randomHeight, randomPoint.y));
-                                        Debug.Log(randomPoint3D);
-                                        fakeMonstersFront[monsterCountFront] = Instantiate(fakeMonsterPrefab, randomPoint3D, mainCamera.transform.rotation);
-                                        monsterCountFront++;
-                                        currentMonsters.x -= 1;
-                                        if (currentMonsters.x == 0)
-                                        {
-                                            if (forwardOrBack)
-                                            {
-                                                Debug.Log("1");
-                                                /* if (trueMonsterNumber >= 1)
-                                                 {
-                                                     Destroy(fakeMonstersFront[trueMonsterNumber - 1]);
-                                                 }
-                                                 else
-                                                 {
-                                                     Destroy(fakeMonstersFront[0]);
-                                                 }*/
-                                                Instantiate(trueMonsterPrefab, fakeMonstersFront[trueMonsterNumber - 1].transform.position, mainCamera.transform.rotation);
-                                                Destroy(fakeMonstersFront[trueMonsterNumber - 1]);
-
-                                            }
-                                            //isButtonBegin = false;
-                                        }
+                                        boundaryPoints.Add(point);
                                     }
-
-                                }
-                                else if (plane.transform.position.z - mainCamera.transform.position.z < 0)
-                                {
-                                    if (currentMonsters.y >= 1)
-                                    {
-                                        foreach (var point in plane.boundary)
-                                        {
-                                            boundaryPoints.Add(point);
-                                        }
-                                        Vector2 randomPoint = RandomPointInPolygon(boundaryPoints);
-                                        float randomHeight = Random.Range(0, maxGenerateHeight);
-                                        Vector3 randomPoint3D = plane.transform.TransformPoint(new Vector3(randomPoint.x, randomHeight, randomPoint.y));
-                                        fakeMonstersBack[monsterCountBack] = Instantiate(fakeMonsterPrefab, mainCamera.transform.position - new Vector3(0, 0, 1) * 2f, mainCamera.transform.rotation);
-                                        monsterCountBack++;
-                                        currentMonsters.y -= 1;
-                                        if (currentMonsters.y == 0)
-                                        {
-                                            if (!forwardOrBack)
-                                            {
-                                                Debug.Log("2");
-                                                /*if (trueMonsterNumber >= 1)
-                                                {
-                                                    Destroy(fakeMonstersBack[trueMonsterNumber - 1]);
-                                                }
-                                                else
-                                                {
-                                                    Destroy(fakeMonstersBack[0]);
-                                                }*/
-                                                //Instantiate(trueMonsterPrefab, randomPoint3D, mainCamera.transform.rotation);
-                                                Destroy(fakeMonstersBack[trueMonsterNumber - 1]);
-                                                Instantiate(trueMonsterPrefab, fakeMonstersBack[trueMonsterNumber - 1].transform.position, mainCamera.transform.rotation);
-                                            }
-                                            //isButtonBegin = false;
-                                        }
-                                    }
-                                }
-                                if (i == monsterStartCount - 1)
-                                {  //这里可能没有-1，具体需要调试
-                                   //monsterStart = 0.0f;
-                                   //addOnce = true;
+                                    Vector2 randomPoint = RandomPointInPolygon(boundaryPoints);
+                                    float randomHeight = Random.Range(0, maxGenerateHeight);
+                                    Vector3 randomPoint3D = plane.transform.TransformPoint(new Vector3(randomPoint.x, randomHeight, randomPoint.y));
+                                    Debug.Log(randomPoint3D);
+                                    fakeMonsters[monsterCount] = Instantiate(fakeMonsterPrefab, randomPoint3D, mainCamera.transform.rotation);
+                                    monsterCount++;
+                                    currentMonsters -= 1;
                                 }
                             }
-                            //monsterStart = 0.0f;
-                            //addOnce = true;
-
-
+                            if (currentMonsters == 0)
+                            {
+                                planeManager.enabled = false;
+                                Debug.Log("1");
+                                StartCoroutine(SwitchTrueMonster());
+                                // allowInit = false;
+                            }
                         }
 
                     }

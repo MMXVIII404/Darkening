@@ -20,6 +20,7 @@ public class AimOnTarget : MonoBehaviour
     public SimplePlayer sanEffect;
     public Button beginButton;
     public Battery battery;
+    private AudioSource audioSource;
 
     bool buttonPressed = false;
     bool inRange = false;
@@ -32,6 +33,12 @@ public class AimOnTarget : MonoBehaviour
     int San = 100;
     GameObject currentMonster;
     Vector2 checkAreaPosition;
+    //add by ljh start
+    public Animator _animator;
+    private AudioSource idleAudioSource;
+    private AudioSource attackAudioSource;
+    private bool isAttacking = false;
+    //add by ljh end
 
     //public Button catchButton;
     //111
@@ -42,11 +49,17 @@ public class AimOnTarget : MonoBehaviour
 
     void Update()
     {
+        //add by ljh start
+        if (!isAttacking)
+        {
+            currentMonster.transform.GetComponent<AudioSource>().mute = false;
+        }
+        //add by ljh end
         //Catch();
         CountTime();
         PointAtMonster();
         FollowMonster();
-        Debug.Log(buttonPressed);
+        // Debug.Log(buttonPressed);
     }
 
 
@@ -94,7 +107,7 @@ public class AimOnTarget : MonoBehaviour
                     }
                     inRange = true;
 
-                    if ( buttonPressed && !startCatching)
+                    if (buttonPressed && !startCatching)
                     {
                         startCatching = true;
                         StartCoroutine(StartCatching(hit.collider.gameObject));
@@ -147,14 +160,14 @@ public class AimOnTarget : MonoBehaviour
         buttonPressed = false;
         // 显示扫描信息并等待两秒
         displayText.GetComponent<TMP_Text>().text = "Prepare to scan...";
-        displayText.GetComponent<TMP_Text>().color= Color.green;
+        displayText.GetComponent<TMP_Text>().color = Color.green;
         checkArea.gameObject.SetActive(true);
         checkAreaSlider.gameObject.SetActive(true);
         checkAreaSlider.value = 0f;
         yield return new WaitForSeconds(2f); // 等待2秒
 
         // 激活扫描区域
-        
+
         startCountTime = true;
 
         float stayTime = 0f;
@@ -176,12 +189,15 @@ public class AimOnTarget : MonoBehaviour
                         Monster.GetComponent<Monster>().AssignMonsterToSlot();
                         yield return new WaitForSeconds(2f); // 等待2秒
                         beginButton.gameObject.SetActive(true);
-                                                             // TODO: Add some VFX to destroy the monster
+                        // TODO: Add some VFX to destroy the monster
                         Destroy(Monster); // 假设您要销毁怪物对象
                         break; // 成功捕捉，退出循环
                     }
                     else
                     {
+                        //add by ljh start
+                        StartCoroutine(AttackAndChangePosition());
+                        //add by ljh end
                         displayText.GetComponent<TMP_Text>().text = "Fake Monster!";
                         checkArea.gameObject.SetActive(false);
                         OnHit(33);   // Get damage
@@ -195,6 +211,7 @@ public class AimOnTarget : MonoBehaviour
             }
             else
             {
+                StartCoroutine(AttackAndChangePosition());
                 stayTime = 0f; // 如果怪物移出了检测区域，重置计时器
                 displayText.GetComponent<TMP_Text>().text = "Monster escaped!";
                 checkArea.gameObject.SetActive(false);
@@ -211,10 +228,26 @@ public class AimOnTarget : MonoBehaviour
             yield return null;
         }
 
-        
+
         startCountTime = false;
         startCatching = false;
     }
+    //add by ljh start
+    private IEnumerator AttackAndChangePosition()
+    {
+        isAttacking = true;
+        // _animator.SetTrigger("attack1");
+        Transform transformBackup = currentMonster.transform;
+        currentMonster.transform.position =  mainCamera.transform.position + mainCamera.transform.forward * 1f;
+        idleAudioSource = currentMonster.transform.GetComponent<AudioSource>();
+        attackAudioSource = currentMonster.transform.GetChild(0).GetComponent<AudioSource>();
+        attackAudioSource.PlayOneShot(attackAudioSource.clip);
+        idleAudioSource.mute = true;
+        yield return new WaitForSeconds(2f);
+        isAttacking = false;
+        currentMonster.transform.position = new Vector3(-transformBackup.position.x, transformBackup.position.y - 0.1f, transformBackup.position.z + 0.1f);
+    }
+    //add by ljh end
 
     public int GetSan()
     {
