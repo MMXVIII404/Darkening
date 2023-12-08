@@ -5811,9 +5811,9 @@ MonoBehaviour:
   monsterCountBack: 0
   trueMonsterPrefab: {fileID: 1330530703867378531, guid: 04ec8c8983e67394cb042075e54310c8, type: 3}
   smokeEffect: {fileID: 2464472393358965664, guid: 77d25f85aed2c4544a146de4d4a5f690, type: 3}
-  fakeMonstersFront: []
-  fakeMonstersBack: []
-  maxMonsters: {x: 10, y: 10}
+  fakeMonsters: []
+  i: 0
+  maxMonsters: 6
   trueMonsterNumber: 0
   monsterStart: 0
   maxGenerateHeight: 3
@@ -8455,7 +8455,7 @@ PrefabInstance:
     - target: {fileID: 941796393375949276, guid: 04ec8c8983e67394cb042075e54310c8, type: 3}
       propertyPath: slots
       value: 
-      objectReference: {fileID: 1678036802}
+      objectReference: {fileID: 0}
     - target: {fileID: 1330530703867378531, guid: 04ec8c8983e67394cb042075e54310c8, type: 3}
       propertyPath: m_Name
       value: Eye_True
@@ -8631,11 +8631,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 80
---- !u!1 &1764910973 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2464472393358965664, guid: 77d25f85aed2c4544a146de4d4a5f690, type: 3}
-  m_PrefabInstance: {fileID: 6521019304667248256}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1789130650
 GameObject:
   m_ObjectHideFlags: 0
@@ -15393,3 +15388,4 @@ SceneRoots:
   - {fileID: 1153036468}
   - {fileID: 7371859762860183444}
   - {fileID: 2115121843}
+  - {fileID: 1750228052}
