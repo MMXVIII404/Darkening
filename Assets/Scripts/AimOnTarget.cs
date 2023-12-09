@@ -21,6 +21,7 @@ public class AimOnTarget : MonoBehaviour
     public Button beginButton;
     public Battery battery;
     private AudioSource audioSource;
+    public int hitValue = 20;
 
     bool buttonPressed = false;
     bool inRange = false;
@@ -204,7 +205,7 @@ public class AimOnTarget : MonoBehaviour
                         //add by ljh end
                         displayText.GetComponent<TMP_Text>().text = "Fake Monster!";
                         checkArea.gameObject.SetActive(false);
-                        OnHit(33);   // Get damage
+                        OnHit(hitValue);   // Get damage
                         Destroy(Monster);
                         yield return new WaitForSeconds(2f);
                         // TODO: Hit Effect
@@ -222,7 +223,7 @@ public class AimOnTarget : MonoBehaviour
                 displayText.GetComponent<TMP_Text>().text = "Monster escaped!";
                 checkArea.gameObject.SetActive(false);
                 // TODO: Hit Effect
-                OnHit(33);   // Get damage
+                OnHit(hitValue);   // Get damage
                 yield return new WaitForSeconds(2f); // 等待2秒
 
 

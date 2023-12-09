@@ -22,17 +22,19 @@ public class Monster : MonoBehaviour
             if (slot != null && !slot.GetContainStatus())
             {
                 // ��� GetContainStatus ���� false�����������Ʋ����� SetContainStatus
-                slot.SetName(this.name);
                 slot.SetContainStatus();
                 switch (monsterType)
                 {
                     case 1:
+                        slot.SetName("Monster 1");
                         child.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Monster1");
                         break;
                     case 2:
+                        slot.SetName("Monster 2");
                         child.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Monster2");
                         break;
                     case 3:
+                        slot.SetName("Monster 3");
                         child.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Monster3");
                         break;
                 }

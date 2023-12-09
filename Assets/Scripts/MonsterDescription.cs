@@ -22,9 +22,9 @@ public class MonsterDescription : MonoBehaviour
     public TextMeshProUGUI monsterName;
     public TextMeshProUGUI monsterDescription;
 
-    public void SetMonsterInformation(MonsterSlot monster)
+    public void SetMonsterInformation(MonsterSlot monsterSlot)
     {
-        string name = monster.GetName();
+        string name = monsterSlot.GetName();
         if (monsterInformation.ContainsKey(name))
         {
             monsterName.text = name;
