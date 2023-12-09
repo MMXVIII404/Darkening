@@ -34,10 +34,11 @@ public class AimOnTarget : MonoBehaviour
     GameObject currentMonster;
     Vector2 checkAreaPosition;
     //add by ljh start
-    public Animator _animator;
+    private Animator _animator;
     private AudioSource idleAudioSource;
     private AudioSource attackAudioSource;
-    private bool isAttacking = false;
+    public bool isAttacking = false;
+
     //add by ljh end
 
     //public Button catchButton;
@@ -52,7 +53,10 @@ public class AimOnTarget : MonoBehaviour
         //add by ljh start
         if (!isAttacking)
         {
-            currentMonster.transform.GetComponent<AudioSource>().mute = false;
+            if (currentMonster != null)
+            {
+                currentMonster.transform.GetComponent<AudioSource>().mute = false;
+            }
         }
         //add by ljh end
         //Catch();
@@ -211,7 +215,9 @@ public class AimOnTarget : MonoBehaviour
             }
             else
             {
+                //add by ljh start
                 StartCoroutine(AttackAndChangePosition());
+                //add by ljh end
                 stayTime = 0f; // 如果怪物移出了检测区域，重置计时器
                 displayText.GetComponent<TMP_Text>().text = "Monster escaped!";
                 checkArea.gameObject.SetActive(false);
@@ -236,16 +242,18 @@ public class AimOnTarget : MonoBehaviour
     private IEnumerator AttackAndChangePosition()
     {
         isAttacking = true;
-        // _animator.SetTrigger("attack1");
+        _animator = currentMonster.GetComponent<Animator>();
         Transform transformBackup = currentMonster.transform;
-        currentMonster.transform.position =  mainCamera.transform.position + mainCamera.transform.forward * 1f;
+        currentMonster.transform.position = mainCamera.transform.position + mainCamera.transform.forward * 0.3f;
+        _animator.SetTrigger("Eye_Attack");
         idleAudioSource = currentMonster.transform.GetComponent<AudioSource>();
-        attackAudioSource = currentMonster.transform.GetChild(0).GetComponent<AudioSource>();
+        attackAudioSource = currentMonster.transform.GetChild(0).GetChild(0).GetComponent<AudioSource>();
         attackAudioSource.PlayOneShot(attackAudioSource.clip);
         idleAudioSource.mute = true;
         yield return new WaitForSeconds(2f);
         isAttacking = false;
         currentMonster.transform.position = new Vector3(-transformBackup.position.x, transformBackup.position.y - 0.1f, transformBackup.position.z + 0.1f);
+        StopCoroutine(AttackAndChangePosition());
     }
     //add by ljh end
 

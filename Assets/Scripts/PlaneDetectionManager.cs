@@ -40,12 +40,13 @@ public class PlaneDetectionManager : MonoBehaviour
     List<Vector2> boundaryPoints = new List<Vector2>();
     public GameObject preScanText;
     private bool firstInit = true;
+    [SerializeField]
     private GameObject firstFakeMonster;
     private bool allowInit = false;
     public Texture fakeMonsterMainTexture;
     public Texture trueMonsterMainTexture;
     private bool breakAllLoops = false;
-    private AudioSource switchPositionAudioSource;
+    public AudioSource switchPositionAudioSource;
 
     private Transform smokeEffectPosition;
     public void OnButtonBegin()
@@ -69,7 +70,7 @@ public class PlaneDetectionManager : MonoBehaviour
         // smokeEffect.GetComponent<ParticleSystemRenderer>().enabled = false;
         preScanText.SetActive(true);
         fakeMonsters = new GameObject[maxMonsters * 2];
-        trueMonsterNumber = Random.Range(3, maxMonsters - 2);
+        trueMonsterNumber = Random.Range(2, maxMonsters - 1);
         addOnce = true;
         monsterStartCount = 0;
         currentMonsters = maxMonsters;
@@ -87,7 +88,9 @@ public class PlaneDetectionManager : MonoBehaviour
     private IEnumerator DelayDestroy()
     {
         yield return new WaitForSeconds(2f);
-        firstFakeMonster.transform.GetChild(0).GetComponent<Renderer>().material.SetTexture("_MainTex", trueMonsterMainTexture);
+        firstFakeMonster.transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material.SetTexture("_MainTex", trueMonsterMainTexture);
+        firstFakeMonster.transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material.SetTexture("_MainTex", trueMonsterMainTexture);
+        firstFakeMonster.transform.GetChild(0).GetChild(2).GetComponent<Renderer>().material.SetTexture("_MainTex", trueMonsterMainTexture);
         firstFakeMonster.tag = "TrueMonster";
         // Destroy(firstFakeMonster);
         // Instantiate(trueMonsterPrefab, mainCamera.transform.position + mainCamera.transform.forward * 1f, mainCamera.transform.rotation);
@@ -99,13 +102,17 @@ public class PlaneDetectionManager : MonoBehaviour
         {
             if (j == 0)
             {
-                firstFakeMonster.transform.GetChild(0).GetComponent<Renderer>().material.SetTexture("_MainTex", fakeMonsterMainTexture);
+                firstFakeMonster.transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material.SetTexture("_MainTex", fakeMonsterMainTexture);
+                firstFakeMonster.transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material.SetTexture("_MainTex", fakeMonsterMainTexture);
+                firstFakeMonster.transform.GetChild(0).GetChild(2).GetComponent<Renderer>().material.SetTexture("_MainTex", fakeMonsterMainTexture);
                 firstFakeMonster.tag = "Monster";
             }
             if (j == trueMonsterNumber)
             {
+                fakeMonsters[j].transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material.SetTexture("_MainTex", trueMonsterMainTexture);
+                fakeMonsters[j].transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material.SetTexture("_MainTex", trueMonsterMainTexture);
+                fakeMonsters[j].transform.GetChild(0).GetChild(2).GetComponent<Renderer>().material.SetTexture("_MainTex", trueMonsterMainTexture);
                 fakeMonsters[j].tag = "TrueMonster";
-                fakeMonsters[j].transform.GetChild(0).GetComponent<Renderer>().material.SetTexture("_MainTex", trueMonsterMainTexture);
                 // Transform transformBackup = fakeMonsters[j].transform;
                 // Destroy(fakeMonsters[j]);
                 // Instantiate(trueMonsterPrefab, transformBackup.position, transformBackup.rotation);
@@ -116,9 +123,13 @@ public class PlaneDetectionManager : MonoBehaviour
             //     break;
             // }
             switchPositionAudioSource.PlayOneShot(switchPositionAudioSource.clip);
-            fakeMonsters[j].transform.GetChild(0).GetComponent<Renderer>().material.SetTexture("_MainTex", trueMonsterMainTexture);
+            fakeMonsters[j].transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material.SetTexture("_MainTex", trueMonsterMainTexture);
+            fakeMonsters[j].transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material.SetTexture("_MainTex", trueMonsterMainTexture);
+            fakeMonsters[j].transform.GetChild(0).GetChild(2).GetComponent<Renderer>().material.SetTexture("_MainTex", trueMonsterMainTexture);
             yield return new WaitForSeconds(0.5f);
-            fakeMonsters[j].transform.GetChild(0).GetComponent<Renderer>().material.SetTexture("_MainTex", fakeMonsterMainTexture);
+            fakeMonsters[j].transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material.SetTexture("_MainTex", fakeMonsterMainTexture);
+            fakeMonsters[j].transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material.SetTexture("_MainTex", fakeMonsterMainTexture);
+            fakeMonsters[j].transform.GetChild(0).GetChild(2).GetComponent<Renderer>().material.SetTexture("_MainTex", fakeMonsterMainTexture);
             if (j == monsterCount - 1)
             {
                 StopCoroutine(SwitchTrueMonster());
@@ -136,13 +147,14 @@ public class PlaneDetectionManager : MonoBehaviour
         {
             if (isButtonBegin)
             {
-                if (plane.alignment == PlaneAlignment.HorizontalUp && planeManager.trackables.count >= 3)
+                if (planeManager.trackables.count >= 2) //plane.alignment == PlaneAlignment.HorizontalUp && 
                 {
                     if (firstInit)
                     {
-                        firstInit = false;
+                        Debug.Log(111);
                         firstFakeMonster = Instantiate(fakeMonsterPrefab, mainCamera.transform.position + mainCamera.transform.forward * 1f, mainCamera.transform.rotation);
                         StartCoroutine(DelayDestroy());
+                        firstInit = false;
                     }
                     if (allowInit) //plane.size.x > 1.5f && plane.size.y > 1.5f
                     {
@@ -167,7 +179,7 @@ public class PlaneDetectionManager : MonoBehaviour
                                     Vector2 randomPoint = RandomPointInPolygon(boundaryPoints);
                                     float randomHeight = Random.Range(0, maxGenerateHeight);
                                     Vector3 randomPoint3D = plane.transform.TransformPoint(new Vector3(randomPoint.x, randomHeight, randomPoint.y));
-                                    Debug.Log(randomPoint3D);
+                                    // Debug.Log(randomPoint3D);
                                     fakeMonsters[monsterCount] = Instantiate(fakeMonsterPrefab, randomPoint3D, mainCamera.transform.rotation);
                                     monsterCount++;
                                     currentMonsters -= 1;
@@ -176,7 +188,7 @@ public class PlaneDetectionManager : MonoBehaviour
                             if (currentMonsters == 0)
                             {
                                 planeManager.enabled = false;
-                                Debug.Log("1");
+                                // Debug.Log("1");
                                 StartCoroutine(SwitchTrueMonster());
                                 // allowInit = false;
                             }

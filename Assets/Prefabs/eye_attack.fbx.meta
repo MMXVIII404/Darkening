@@ -1,0 +1,333 @@
+fileFormatVersion: 2
+guid: c5be6238863d61644a079fe66c9d1f46
+ModelImporter:
+  serializedVersion: 22200
+  internalIDToNameTable: []
+  externalObjects: {}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      internalID: 1827226128182048838
+      firstFrame: 1
+      lastFrame: 48
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton:
+    - name: eye_attack(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: eye
+      parentName: eye_attack(Clone)
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: eye_flower
+      parentName: eye
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: eye_ball
+      parentName: eye
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: eye_foot
+      parentName: eye
+      position: {x: -0, y: 0.0036910586, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint1
+      parentName: eye_attack(Clone)
+      position: {x: -0.0004694038, y: 0.08962006, z: 0.013182027}
+      rotation: {x: -0.32914436, y: 0.9442796, z: -7.797473e-17, w: -3.766617e-17}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint2
+      parentName: joint1
+      position: {x: -0.032715406, y: -0.0011846947, z: 0.013176452}
+      rotation: {x: -3.623532e-27, y: -9.933256e-18, z: 0.08111119, w: 0.99670506}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint3
+      parentName: joint2
+      position: {x: -0.036219154, y: 0.002245584, z: -0.013176452}
+      rotation: {x: -1.2642958e-27, y: -1.15060145e-17, z: 0.013306359, w: 0.9999115}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint4
+      parentName: joint3
+      position: {x: -0.027643768, y: 0.0035089718, z: -0.011817502}
+      rotation: {x: 0.18796027, y: -0.68166775, z: 0.14929093, w: 0.6911673}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint5
+      parentName: joint4
+      position: {x: -0.019026134, y: 0.0013587676, z: 0.0017636834}
+      rotation: {x: 0.019850101, y: -0.7047154, z: 0.019968852, w: 0.70893127}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint6
+      parentName: joint5
+      position: {x: -0.012483094, y: -2.068477e-15, z: 0.012355449}
+      rotation: {x: 0, y: -0.002982241, z: -0, w: 0.9999956}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint12
+      parentName: joint1
+      position: {x: 0.011814401, y: 0.02599513, z: 0.021956116}
+      rotation: {x: -0.5217486, y: 0.8530993, z: -8.4185155e-17, w: -2.0289376e-17}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint13
+      parentName: joint12
+      position: {x: -0.045581874, y: -0.0014646751, z: 0.0066111367}
+      rotation: {x: 0, y: 0, z: 0.13201615, w: 0.9912476}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint14
+      parentName: joint13
+      position: {x: -0.032234326, y: -2.7343049e-18, z: 0.015344979}
+      rotation: {x: -0.06490134, y: 0.79851407, z: 0.04848214, w: 0.5965004}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint25
+      parentName: joint14
+      position: {x: -0.016577464, y: 0.0000000104760876, z: -0.0065629166}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint15
+      parentName: joint25
+      position: {x: -0.015576734, y: -0.0000000104760876, z: 0.0065629166}
+      rotation: {x: -1.2410561e-17, y: -0.8011472, z: 1.2410561e-17, w: 0.59846735}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint7
+      parentName: joint1
+      position: {x: -0.01706537, y: 0.028072996, z: 0.009967579}
+      rotation: {x: 0.8501988, y: -0.5264618, z: 3.2236486e-17, w: -5.205966e-17}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint8
+      parentName: joint7
+      position: {x: -0.041681197, y: -0.0007037954, z: 0.009967579}
+      rotation: {x: -0.0033560935, y: -0.010608681, z: 0.07034698, w: 0.9974606}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint9
+      parentName: joint8
+      position: {x: -0.021094581, y: -0.0024762158, z: 0.004337032}
+      rotation: {x: -0.6238368, y: 0.3040412, z: 0.056259964, w: 0.7177893}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint10
+      parentName: joint9
+      position: {x: -0.02189254, y: 0.0011255057, z: 3.942713e-19}
+      rotation: {x: -1.5601277e-24, y: 1.2455457e-16, z: 0.61947125, w: 0.78501934}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint11
+      parentName: joint10
+      position: {x: -0.018688817, y: 0.0024054393, z: 4.689708e-18}
+      rotation: {x: -0.38595214, y: -0.5924871, z: -0.38595214, w: 0.5924871}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint20
+      parentName: joint1
+      position: {x: -0.0072168456, y: -0.0344758, z: 0.012051634}
+      rotation: {x: -0.07283474, y: -0.00243889, z: 0.8327851, w: 0.5487787}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint21
+      parentName: joint20
+      position: {x: -0.037588093, y: -2.6426104e-17, z: -0.005987411}
+      rotation: {x: -0.052993514, y: 0.2206235, z: 0.031563893, w: 0.97340673}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint22
+      parentName: joint21
+      position: {x: -0.029338237, y: -0.003070629, z: -0.00799009}
+      rotation: {x: -0.06381213, y: -0.7042216, z: -0.25951564, w: 0.65776265}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint26
+      parentName: joint22
+      position: {x: -0.02073887, y: -0.006128424, z: 0.0032294272}
+      rotation: {x: -0.3658572, y: -0.20860681, z: -0.27840677, w: 0.8632041}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint23
+      parentName: joint26
+      position: {x: -0.019435346, y: 0.0066706836, z: -0.005204023}
+      rotation: {x: 0.10057125, y: -0.69991815, z: 0.10057125, w: 0.69991815}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint16
+      parentName: joint1
+      position: {x: 0.033955157, y: -0.00072910986, z: 0.014312421}
+      rotation: {x: 0.30991167, y: 0.94680303, z: -0.06956309, w: 0.051767964}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint17
+      parentName: joint16
+      position: {x: -0.03586753, y: -3.993239e-18, z: 0.0068409154}
+      rotation: {x: 0, y: 0, z: 0.06099808, w: 0.9981379}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint18
+      parentName: joint17
+      position: {x: -0.026120782, y: -0.008099021, z: 0.007471506}
+      rotation: {x: 0.4850573, y: 0.63319105, z: -0.44236407, w: 0.4100031}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint24
+      parentName: joint18
+      position: {x: -0.016503239, y: 0.000000031285737, z: -0.014482253}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint19
+      parentName: joint24
+      position: {x: -0.016740948, y: -0.000000031285737, z: 0.002879559}
+      rotation: {x: -1.3157188e-17, y: -0.8063339, z: 1.3157188e-17, w: 0.5914607}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint27
+      parentName: joint1
+      position: {x: 0.0203314, y: -0.02544206, z: -3.115754e-18}
+      rotation: {x: 0.4332339, y: 0.90128154, z: -2.8659654e-17, w: -8.17155e-17}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint28
+      parentName: joint27
+      position: {x: -0.026099233, y: 4.0419056e-18, z: 0}
+      rotation: {x: 0.90645206, y: 0.42230883, z: 2.5858958e-17, w: 5.5504183e-17}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint29
+      parentName: joint28
+      position: {x: -0.014600853, y: 3.330669e-18, z: 4.9303805e-34}
+      rotation: {x: 1.8657912e-27, y: 2.6851052e-18, z: -0.021925548, w: 0.9997596}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint30
+      parentName: joint29
+      position: {x: -0.015741574, y: -1.110223e-18, z: 8.4515234e-20}
+      rotation: {x: 0.8568673, y: 0.515537, z: 7.6800577e-17, w: 2.5253384e-17}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint31
+      parentName: joint30
+      position: {x: -0.018846234, y: 1.2212453e-17, z: 1.9897422e-18}
+      rotation: {x: 0, y: -0, z: -0.64403343, w: 0.76499736}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint32
+      parentName: joint28
+      position: {x: 0.0023031058, y: -0.014055824, z: -1.7213419e-18}
+      rotation: {x: 0.60648924, y: 0.7950917, z: -1.15485705e-17, w: -8.582208e-17}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint33
+      parentName: joint32
+      position: {x: -0.016079659, y: -0.00091507524, z: -1.2664449e-19}
+      rotation: {x: 0.83493227, y: 0.55035275, z: 3.3699388e-17, w: 5.1124854e-17}
+      scale: {x: 1, y: 1, z: 1}
+    - name: joint34
+      parentName: joint33
+      position: {x: -0.019303432, y: 0.00006799511, z: -3.165976e-20}
+      rotation: {x: 0.6347635, y: 0.7727065, z: -8.446575e-18, w: -8.618268e-17}
+      scale: {x: 1, y: 1, z: 1}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
