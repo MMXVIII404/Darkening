@@ -16,12 +16,15 @@ public class AimOnTarget : MonoBehaviour
 
     public Image checkArea;
     public Slider checkAreaSlider;
+
     public event Action onHitAction;
+    public event Action gameOverAction;
     public SimplePlayer sanEffect;
     public Button beginButton;
     public Battery battery;
     private AudioSource audioSource;
     public int hitValue = 20;
+    public GameObject gameoverPanel;
 
     bool buttonPressed = false;
     bool inRange = false;
@@ -273,7 +276,7 @@ public class AimOnTarget : MonoBehaviour
 
         if (San <= 0)
         {
-            // Game Over
+            gameoverPanel.SetActive(true);
         }
     }
 }

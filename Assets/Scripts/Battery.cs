@@ -8,6 +8,7 @@ public class Battery : MonoBehaviour
     public Slider batterySlider;
     private float decreaseRatePerSecond;
     public Image fill;
+    public GameObject gameoverPanel;
 
     void Start()
     {
@@ -30,5 +31,9 @@ public class Battery : MonoBehaviour
     public void UseBattery(float usage)
     {
         batterySlider.value -= usage;
+        if (batterySlider.value <= 0.8)
+        {
+            gameoverPanel.SetActive(true);
+        }
     }
 }
