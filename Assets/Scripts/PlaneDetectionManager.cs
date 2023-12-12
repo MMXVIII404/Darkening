@@ -21,7 +21,7 @@ public class PlaneDetectionManager : MonoBehaviour
     private GameObject[] fakeMonsters;
     private int i = 0;
     public int maxMonsters = 6;
-    private int trueMonsterNumber;
+    public int trueMonsterNumber;
     private float deltaTime = 0.0f;
     public float maxGenerateHeight = 3.0f; //TODO: 改成预扫描要扫到天花板/实时更新当前最高的horzitonal plane + 2f为最高生成高度
     [SerializeField]
@@ -151,33 +151,40 @@ public class PlaneDetectionManager : MonoBehaviour
                     }
                     if (allowInit) //plane.size.x > 1.5f && plane.size.y > 1.5f
                     {
-                            count++;
-                            for (int i = 0; i < maxMonsters / 3; i++)
+                        count++;
+                        foreach (var point in plane.boundary)
+                        {
+                            boundaryPoints.Add(point);
+                        }
+                        for (int i = 0; i < maxMonsters / 3; i++)
+                        {
+                            if (currentMonsters >= 1)
                             {
-                                if (currentMonsters >= 1)
-                                {
-                                    foreach (var point in plane.boundary)
-                                    {
-                                        boundaryPoints.Add(point);
+                                Vector2 randomPoint = RandomPointInPolygon(boundaryPoints);
+                                float randomHeight = Random.Range(0, maxGenerateHeight);
+                                Vector3 randomPoint3D = plane.transform.TransformPoint(new Vector3(randomPoint.x, randomPoint.x + randomHeight, randomPoint.y));
+                                // Debug.Log(randomPoint3D);
+                                if(monsterCount >= 1){
+                                    if(Vector3.Distance(randomPoint3D,fakeMonsters[monsterCount-1].transform.position) < 0.3f){
+                                        randomPoint = RandomPointInPolygon(boundaryPoints);
+                                        randomHeight = Random.Range(-0.3f, maxGenerateHeight);
+                                        randomPoint3D = plane.transform.TransformPoint(new Vector3(randomPoint.x, randomPoint.x + randomHeight, randomPoint.y));
                                     }
-                                    Vector2 randomPoint = RandomPointInPolygon(boundaryPoints);
-                                    float randomHeight = Random.Range(0, maxGenerateHeight);
-                                    Vector3 randomPoint3D = plane.transform.TransformPoint(new Vector3(randomPoint.x, randomHeight, randomPoint.y));
-                                    // Debug.Log(randomPoint3D);
-                                    fakeMonsters[monsterCount] = Instantiate(fakeMonsterPrefab, randomPoint3D, mainCamera.transform.rotation);
-                                    monsterCount++;
-                                    currentMonsters -= 1;
                                 }
+                                fakeMonsters[monsterCount] = Instantiate(fakeMonsterPrefab, randomPoint3D, mainCamera.transform.rotation);
+                                monsterCount++;
+                                currentMonsters -= 1;
                             }
-                            if (currentMonsters == 0)
-                            {
-                                planeManager.enabled = false;
-                                StartCoroutine(SwitchTrueMonster());
-                                if (count >= 3)
-                                {
-                                    allowInit = false;
-                                }
-                            }
+                        }
+                        if (currentMonsters == 0)
+                        {
+                            planeManager.enabled = false;
+                            StartCoroutine(SwitchTrueMonster());
+                            // if (count >= 3)
+                            // {
+                                allowInit = false;
+                            // }
+                        }
                     }
                 }
                 else if (plane.alignment == PlaneAlignment.Vertical)
@@ -200,9 +207,9 @@ public class PlaneDetectionManager : MonoBehaviour
     Vector3 RandomPointInBounds(Bounds bounds)
     {
         return new Vector3(
-            Random.Range(bounds.min.x, bounds.max.x),
+            Random.Range(bounds.min.x + 0.1f, bounds.max.x - 0.1f),
             Random.Range(bounds.min.y, bounds.max.y),
-            Random.Range(bounds.min.z, bounds.max.z)
+            Random.Range(bounds.min.z + 0.1f, bounds.max.z - 0.1f)
         );
     }
     Vector2 RandomPointInPolygon(List<Vector2> poly)
@@ -216,10 +223,8 @@ public class PlaneDetectionManager : MonoBehaviour
             bounds.Encapsulate(point);
         }
         Vector3 randomPoint = RandomPointInBounds(bounds);
-        Vector2 randomPointxz;
-        randomPointxz.x = randomPoint.x;
-        randomPointxz.y = randomPoint.z;
-        return randomPointxz;
+
+        return randomPoint;
     }
 }
 

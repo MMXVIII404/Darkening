@@ -786,7 +786,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &54183778
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6533,7 +6533,8 @@ MonoBehaviour:
   trueMonsterPrefab: {fileID: 4601761716725402142, guid: b9b5f6ce2b96e6048a0d53857434cfc7, type: 3}
   smokeEffect: {fileID: 8668514576537292064}
   maxMonsters: 9
-  maxGenerateHeight: 1
+  trueMonsterNumber: 0
+  maxGenerateHeight: 0.75
   currentMonsters: 0
   preScanText: {fileID: 723554273}
   fakeMonsterMainTexture: {fileID: 2800000, guid: 658fcfc777b0fbb4d9fb719e6603cb85, type: 3}

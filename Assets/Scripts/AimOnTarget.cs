@@ -238,6 +238,7 @@ public class AimOnTarget : MonoBehaviour
             }
             yield return null;
         }
+        checkArea.gameObject.SetActive(false);
 
 
         startCountTime = false;
@@ -258,8 +259,9 @@ public class AimOnTarget : MonoBehaviour
         yield return new WaitForSeconds(2f);
         isAttacking = false;
         currentMonster.transform.position = new Vector3(-transformBackup.position.x, transformBackup.position.y, transformBackup.position.z);
+        planeDetectionManager.trueMonsterNumber = UnityEngine.Random.Range(2, planeDetectionManager.maxMonsters - 1);
         StartCoroutine(planeDetectionManager.SwitchTrueMonster());
-        StopCoroutine(AttackAndChangePosition());
+        // StopCoroutine(AttackAndChangePosition());
     }
     //add by ljh end
 
