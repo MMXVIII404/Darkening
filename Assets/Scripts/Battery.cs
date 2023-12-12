@@ -9,7 +9,7 @@ public class Battery : MonoBehaviour
     private float decreaseRatePerSecond;
     public Image fill;
     public GameObject gameoverPanel;
-
+    public FadeWarning fadeWarning;
     void Start()
     {
         decreaseRatePerSecond = 1 / 300f; // 在5分钟内减至0'
@@ -18,22 +18,25 @@ public class Battery : MonoBehaviour
 
     void Update()
     {
-        if (batterySlider.value > 0)
+        if (fadeWarning.fadingDone)
         {
-            batterySlider.value -= decreaseRatePerSecond * Time.deltaTime;
-        }
-        if (batterySlider.value < 0.2)
-        {
-            fill.color = Color.red;
+            if (batterySlider.value > 0)
+            {
+                batterySlider.value -= decreaseRatePerSecond * Time.deltaTime;
+            }
+            if (batterySlider.value < 0.2)
+            {
+                fill.color = Color.red;
+            }
+            if (batterySlider.value <= 0.01)
+            {
+                gameoverPanel.SetActive(true);
+            }
         }
     }
 
     public void UseBattery(float usage)
     {
         batterySlider.value -= usage;
-        if (batterySlider.value <= 0.8)
-        {
-            gameoverPanel.SetActive(true);
-        }
     }
 }

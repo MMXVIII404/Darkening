@@ -7,6 +7,8 @@ public class FadeWarning : MonoBehaviour
 {
     public Image warning;
     public GameObject warningSection;
+    public GameObject warningBack;
+    public bool fadingDone = false;
     public void StartShowing()
     {
         StartCoroutine(ShowImage(warning, 3f));
@@ -19,7 +21,6 @@ public class FadeWarning : MonoBehaviour
         // 获取图像的初始 alpha 值
         Color startColor = image.color;
         Color warningStartColor = warningSection.GetComponent<Image>().color;
-
         while (counter < duration)
         {
             counter += Time.deltaTime;
@@ -29,6 +30,8 @@ public class FadeWarning : MonoBehaviour
             yield return null;
         }
         warningSection.SetActive(false);
+        warningBack.SetActive(false);
+        fadingDone = true;
     }
 
     private IEnumerator ShowImage(Image image, float duration)
@@ -37,7 +40,6 @@ public class FadeWarning : MonoBehaviour
 
         // 获取图像的初始 alpha 值
         Color startColor = image.color;
-
         while (counter < duration)
         {
             counter += Time.deltaTime;

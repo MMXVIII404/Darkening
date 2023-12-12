@@ -7,14 +7,11 @@ public class FadeImage : MonoBehaviour
 {
     public Image imageToFade; // 需要设置为要淡出的图像
     public Image startButtonImage;
-    public Image exitButtonImage;
     public Image logo1Image;
     public Image logo2Image;
     public GameObject startMenu;
     public TextMeshProUGUI header;
     public TextMeshProUGUI startText;
-    public TextMeshProUGUI quitText;
-    public Image warning;
     public FadeWarning fadeWarning;
     // 调用这个方法来开始淡出效果
     public void StartFading()
@@ -28,25 +25,20 @@ public class FadeImage : MonoBehaviour
 
         // 获取图像的初始 alpha 值
         Color startColor = image.color;
-
+        Color color = header.color;
         while (counter < duration)
         {
             counter += Time.deltaTime;
             float alpha = Mathf.Lerp(startColor.a, 0, counter / duration);
             image.color = new Color(startColor.r, startColor.g, startColor.b, alpha);
             startButtonImage.color = new Color(startColor.r, startColor.g, startColor.b, alpha);
-            exitButtonImage.color = new Color(startColor.r, startColor.g, startColor.b, alpha);
-            logo1Image.color = new Color(startColor.r, startColor.g, startColor.b, alpha);
-            logo2Image.color = new Color(startColor.r, startColor.g, startColor.b, alpha);
-            Color color = header.color;
+            logo1Image.color = new Color(logo1Image.color.r, logo1Image.color.g, logo1Image.color.b, alpha);
+            logo2Image.color = new Color(logo2Image.color.r, logo2Image.color.g, logo2Image.color.b, alpha);
             color.a = alpha;
             header.color = color;
             color = startText.color;
             color.a = alpha;
             startText.color = color;
-            color = quitText.color;
-            color.a = alpha;
-            quitText.color = color;
             yield return null;
         }
         fadeWarning.StartShowing();
