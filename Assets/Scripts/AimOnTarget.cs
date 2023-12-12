@@ -39,6 +39,7 @@ public class AimOnTarget : MonoBehaviour
     private AudioSource idleAudioSource;
     private AudioSource attackAudioSource;
     public bool isAttacking = false;
+    public PlaneDetectionManager planeDetectionManager;
 
     //add by ljh end
 
@@ -253,7 +254,8 @@ public class AimOnTarget : MonoBehaviour
         idleAudioSource.mute = true;
         yield return new WaitForSeconds(2f);
         isAttacking = false;
-        currentMonster.transform.position = new Vector3(-transformBackup.position.x, transformBackup.position.y - 0.1f, transformBackup.position.z + 0.1f);
+        currentMonster.transform.position = new Vector3(-transformBackup.position.x, transformBackup.position.y, transformBackup.position.z);
+        StartCoroutine(planeDetectionManager.SwitchTrueMonster());
         StopCoroutine(AttackAndChangePosition());
     }
     //add by ljh end
