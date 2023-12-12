@@ -58,7 +58,7 @@ public class AimOnTarget : MonoBehaviour
         //add by ljh start
         if (!isAttacking)
         {
-            if (currentMonster != null)
+            if (currentMonster != null  && currentMonster.tag == "TrueMonster")
             {
                 currentMonster.transform.GetComponent<AudioSource>().mute = false;
             }
@@ -255,10 +255,16 @@ public class AimOnTarget : MonoBehaviour
         Transform transformBackup = currentMonster.transform;
         currentMonster.transform.position = mainCamera.transform.position + mainCamera.transform.forward * 0.3f;
         _animator.SetTrigger("Eye_Attack");
-        idleAudioSource = currentMonster.transform.GetComponent<AudioSource>();
+
+        if (currentMonster.tag == "TrueMonster")
+        {
+            idleAudioSource = currentMonster.transform.GetComponent<AudioSource>();
+            idleAudioSource.mute = true;
+        }
+        
         attackAudioSource = currentMonster.transform.GetChild(0).GetChild(0).GetComponent<AudioSource>();
         attackAudioSource.PlayOneShot(attackAudioSource.clip);
-        idleAudioSource.mute = true;
+        
         yield return new WaitForSeconds(2f);
         isAttacking = false;
         currentMonster.transform.position = new Vector3(-transformBackup.position.x, transformBackup.position.y, transformBackup.position.z);
