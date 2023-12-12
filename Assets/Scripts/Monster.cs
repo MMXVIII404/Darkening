@@ -26,8 +26,8 @@ public class Monster : MonoBehaviour
                 switch (monsterType)
                 {
                     case 1:
-                        slot.SetName("Monster 1");
-                        child.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Monster1");
+                        slot.SetName("Grettos");
+                        child.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Grettos");
                         break;
                     case 2:
                         slot.SetName("Monster 2");

@@ -159,7 +159,7 @@ public class AimOnTarget : MonoBehaviour
     {
         float distanceToCheckArea = Vector2.Distance(checkAreaPosition, new Vector2(Screen.width / 2, Screen.height / 2));
 
-        float radius = checkArea.rectTransform.sizeDelta.x * 0.5f + 50f;
+        float radius = checkArea.rectTransform.sizeDelta.x * 0.5f + 80f;
         return distanceToCheckArea <= radius;
     }
 
@@ -197,9 +197,12 @@ public class AimOnTarget : MonoBehaviour
                         checkArea.gameObject.SetActive(false);
                         Monster.GetComponent<Monster>().AssignMonsterToSlot();
                         yield return new WaitForSeconds(2f); // 等待2秒
-                        beginButton.gameObject.SetActive(true);
+                        //beginButton.gameObject.SetActive(true);
                         // TODO: Add some VFX to destroy the monster
-                        Destroy(Monster); // 假设您要销毁怪物对象
+                        //Destroy(Monster); // 假设您要销毁怪物对象
+
+                        planeDetectionManager.DestroyAllMonster();
+
                         break; // 成功捕捉，退出循环
                     }
                     else

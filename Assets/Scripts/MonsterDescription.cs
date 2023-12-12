@@ -14,7 +14,10 @@ public class MonsterDescription : MonoBehaviour
 
     Dictionary<string, string> monsterInformation = new Dictionary<string, String>()
         {
-            { "Monster 1", " Monster 1 description" },
+            { "Grettos", "Attack intensity: Low\n" +
+            "Level: I\n" +
+            "Appearance: There are five petal shaped tentacles on the eye. Underneath are two bones made of claws, which are used to escape if necessary\n" +
+            "Behavior: Petal-like tentacles close when startled. When angry, it will jump directly on the intruder's head and attack them"},
             { "Monster 2", " Monster 2 description" },
             { "Monster 3", " Monster 3 description" }
         };
@@ -43,8 +46,8 @@ public class MonsterDescription : MonoBehaviour
     {
         switch (monsterName.text)
         {
-            case "Monster 1":
-                monsterImage.sprite = Resources.Load<Sprite>("Sprites/Monster1");
+            case "Grettos":
+                monsterImage.sprite = Resources.Load<Sprite>("Sprites/Grettos");
                 break;
             case "Monster 2":
                 monsterImage.sprite = Resources.Load<Sprite>("Sprites/Monster2");

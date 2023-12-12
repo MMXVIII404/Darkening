@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -61,7 +62,7 @@ public class PlaneDetectionManager : MonoBehaviour
         // smokeEffect.GetComponent<ParticleSystemRenderer>().enabled = false;
         preScanText.SetActive(true);
         fakeMonsters = new GameObject[maxMonsters * 2];
-        trueMonsterNumber = Random.Range(2, maxMonsters - 1);
+        trueMonsterNumber = UnityEngine.Random.Range(2, maxMonsters - 1);
         currentMonsters = maxMonsters;
         mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         planeManager = GetComponent<ARPlaneManager>();
@@ -101,7 +102,7 @@ public class PlaneDetectionManager : MonoBehaviour
                 firstFakeMonster.transform.GetChild(0).GetChild(2).GetComponent<Renderer>().material.SetTexture("_MainTex", fakeMonsterMainTexture);
                 firstFakeMonster.tag = "Monster";
             }
-            if (j == trueMonsterNumber)
+            else if (j == trueMonsterNumber)
             {
                 fakeMonsters[j].transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material.SetTexture("_MainTex", trueMonsterMainTexture);
                 fakeMonsters[j].transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material.SetTexture("_MainTex", trueMonsterMainTexture);
@@ -116,14 +117,18 @@ public class PlaneDetectionManager : MonoBehaviour
             // if(breakAllLoops){
             //     break;
             // }
-            switchPositionAudioSource.PlayOneShot(switchPositionAudioSource.clip);
-            fakeMonsters[j].transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material.SetTexture("_MainTex", trueMonsterMainTexture);
-            fakeMonsters[j].transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material.SetTexture("_MainTex", trueMonsterMainTexture);
-            fakeMonsters[j].transform.GetChild(0).GetChild(2).GetComponent<Renderer>().material.SetTexture("_MainTex", trueMonsterMainTexture);
-            yield return new WaitForSeconds(0.5f);
-            fakeMonsters[j].transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material.SetTexture("_MainTex", fakeMonsterMainTexture);
-            fakeMonsters[j].transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material.SetTexture("_MainTex", fakeMonsterMainTexture);
-            fakeMonsters[j].transform.GetChild(0).GetChild(2).GetComponent<Renderer>().material.SetTexture("_MainTex", fakeMonsterMainTexture);
+            else
+            {
+                switchPositionAudioSource.PlayOneShot(switchPositionAudioSource.clip);
+                fakeMonsters[j].transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material.SetTexture("_MainTex", trueMonsterMainTexture);
+                fakeMonsters[j].transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material.SetTexture("_MainTex", trueMonsterMainTexture);
+                fakeMonsters[j].transform.GetChild(0).GetChild(2).GetComponent<Renderer>().material.SetTexture("_MainTex", trueMonsterMainTexture);
+                yield return new WaitForSeconds(0.5f);
+                fakeMonsters[j].transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material.SetTexture("_MainTex", fakeMonsterMainTexture);
+                fakeMonsters[j].transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material.SetTexture("_MainTex", fakeMonsterMainTexture);
+                fakeMonsters[j].transform.GetChild(0).GetChild(2).GetComponent<Renderer>().material.SetTexture("_MainTex", fakeMonsterMainTexture);
+            }
+            
             if (j == monsterCount - 1)
             {
                 StopCoroutine(SwitchTrueMonster());
@@ -161,14 +166,14 @@ public class PlaneDetectionManager : MonoBehaviour
                             if (currentMonsters >= 1)
                             {
                                 Vector2 randomPoint = RandomPointInPolygon(boundaryPoints);
-                                float randomHeight = Random.Range(0, maxGenerateHeight);
-                                Vector3 randomPoint3D = plane.transform.TransformPoint(new Vector3(randomPoint.x, randomPoint.x + randomHeight, randomPoint.y));
+                                float randomHeight = UnityEngine.Random.Range(0, maxGenerateHeight);
+                                Vector3 randomPoint3D = plane.transform.TransformPoint(new Vector3(randomPoint.x,randomHeight, randomPoint.y));
                                 // Debug.Log(randomPoint3D);
                                 if(monsterCount >= 1){
                                     if(Vector3.Distance(randomPoint3D,fakeMonsters[monsterCount-1].transform.position) < 0.3f){
                                         randomPoint = RandomPointInPolygon(boundaryPoints);
-                                        randomHeight = Random.Range(-0.3f, maxGenerateHeight);
-                                        randomPoint3D = plane.transform.TransformPoint(new Vector3(randomPoint.x, randomPoint.x + randomHeight, randomPoint.y));
+                                        randomHeight = UnityEngine.Random.Range(0f, 0.1f+maxGenerateHeight);
+                                        randomPoint3D = plane.transform.TransformPoint(new Vector3(randomPoint.x, randomHeight, randomPoint.y));
                                     }
                                 }
                                 fakeMonsters[monsterCount] = Instantiate(fakeMonsterPrefab, randomPoint3D, mainCamera.transform.rotation);
@@ -206,25 +211,41 @@ public class PlaneDetectionManager : MonoBehaviour
     }
     Vector3 RandomPointInBounds(Bounds bounds)
     {
-        return new Vector3(
-            Random.Range(bounds.min.x + 0.1f, bounds.max.x - 0.1f),
-            Random.Range(bounds.min.y, bounds.max.y),
-            Random.Range(bounds.min.z + 0.1f, bounds.max.z - 0.1f)
+        return new Vector2(
+            UnityEngine.Random.Range(bounds.min.x + 0.1f, bounds.max.x - 0.1f),
+            UnityEngine.Random.Range(bounds.min.y + 0.1f, bounds.max.y - 0.1f)
         );
     }
     Vector2 RandomPointInPolygon(List<Vector2> poly)
     {
-        // int maxAttempts = 100;
-        // int attempts = 0;
-        // 计算边界框
-        Bounds bounds = new Bounds(poly[0], Vector3.zero);
-        foreach (var point in poly)
+        try
         {
-            bounds.Encapsulate(point);
-        }
-        Vector3 randomPoint = RandomPointInBounds(bounds);
+            // int maxAttempts = 100;
+            // int attempts = 0;
+            // 计算边界框
+            Bounds bounds = new Bounds(poly[0], Vector2.zero);
+            foreach (var point in poly)
+            {
+                bounds.Encapsulate(point);
+            }
+            Vector2 randomPoint = RandomPointInBounds(bounds);
 
-        return randomPoint;
+            return randomPoint;
+        }
+        catch
+        {
+            return Vector2.zero;
+        }
+    }
+
+    public void DestroyAllMonster()
+    {
+        for (int i = 0; i < fakeMonsters.Length; i++)
+        {
+            Destroy(fakeMonsters[i]);
+        }
+        Destroy(firstFakeMonster);
+
     }
 }
 
