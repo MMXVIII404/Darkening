@@ -143,29 +143,22 @@ public class PlaneDetectionManager : MonoBehaviour
     {
         for (int j = 0; j < monsterCount; j++)
         {
-            if (j == 0)
-            {
+            //if (j == 0)
+            //{
                 firstFakeMonster.transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material.SetTexture("_MainTex", fakeMonsterMainTexture);
                 firstFakeMonster.transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material.SetTexture("_MainTex", fakeMonsterMainTexture);
                 firstFakeMonster.transform.GetChild(0).GetChild(2).GetComponent<Renderer>().material.SetTexture("_MainTex", fakeMonsterMainTexture);
                 firstFakeMonster.tag = "Monster";
-            }
-            else if (j == trueMonsterNumber)
+            //}
+            if (j == trueMonsterNumber)
             {
                 fakeMonsters[j].transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material.SetTexture("_MainTex", trueMonsterMainTexture);
                 fakeMonsters[j].transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material.SetTexture("_MainTex", trueMonsterMainTexture);
                 fakeMonsters[j].transform.GetChild(0).GetChild(2).GetComponent<Renderer>().material.SetTexture("_MainTex", trueMonsterMainTexture);
                 fakeMonsters[j].tag = "TrueMonster";
-
-                // Transform transformBackup = fakeMonsters[j].transform;
-                // Destroy(fakeMonsters[j]);
-                // Instantiate(trueMonsterPrefab, transformBackup.position, transformBackup.rotation);
-                // breakAllLoops = true;
-                break;
+                //break;
             }
-            // if(breakAllLoops){
-            //     break;
-            // }
+
             else
             {
                 switchPositionAudioSource.PlayOneShot(switchPositionAudioSource.clip);
@@ -176,12 +169,14 @@ public class PlaneDetectionManager : MonoBehaviour
                 fakeMonsters[j].transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material.SetTexture("_MainTex", fakeMonsterMainTexture);
                 fakeMonsters[j].transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material.SetTexture("_MainTex", fakeMonsterMainTexture);
                 fakeMonsters[j].transform.GetChild(0).GetChild(2).GetComponent<Renderer>().material.SetTexture("_MainTex", fakeMonsterMainTexture);
+                fakeMonsters[j].tag = "Monster";
             }
             
-            if (j == monsterCount - 1)
-            {
-                StopCoroutine(SwitchTrueMonster());
-            }
+            //if (j == monsterCount - 1)
+            //{
+             //   StopCoroutine(SwitchTrueMonster());
+            //}
+           
         }
     }
 
@@ -195,7 +190,7 @@ public class PlaneDetectionManager : MonoBehaviour
         {
             if (isButtonBegin)
             {
-                if (planeManager.trackables.count >= 3) //plane.alignment == PlaneAlignment.HorizontalUp && 
+                if (planeManager.trackables.count >= 2) //plane.alignment == PlaneAlignment.HorizontalUp && 
                 {
                     if (firstInit)
                     {
@@ -210,7 +205,7 @@ public class PlaneDetectionManager : MonoBehaviour
                         {
                             boundaryPoints.Add(point);
                         }
-                        for (int i = 0; i < maxMonsters / 3; i++)
+                        for (int i = 0; i < maxMonsters / 2 ; i++)
                         {
                             if (currentMonsters >= 1)
                             {

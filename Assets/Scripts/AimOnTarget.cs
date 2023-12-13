@@ -23,7 +23,7 @@ public class AimOnTarget : MonoBehaviour
     public Button beginButton;
     public Battery battery;
     private AudioSource audioSource;
-    public int hitValue = 20;
+    public int hitValue = 25;
     public GameObject gameoverPanel;
 
     bool buttonPressed = false;

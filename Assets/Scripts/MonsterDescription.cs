@@ -47,7 +47,7 @@ public class MonsterDescription : MonoBehaviour
         switch (monsterName.text)
         {
             case "Grettos":
-                monsterImage.sprite = Resources.Load<Sprite>("Sprites/Grettos");
+                monsterImage.sprite = Resources.Load<Sprite>("Sprites/Grettos_Description");
                 break;
             case "Monster 2":
                 monsterImage.sprite = Resources.Load<Sprite>("Sprites/Monster2");

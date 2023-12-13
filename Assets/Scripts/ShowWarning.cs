@@ -9,9 +9,10 @@ public class FadeWarning : MonoBehaviour
     public GameObject warningSection;
     public GameObject warningBack;
     public bool fadingDone = false;
+    float transitionTime = 1.5f;
     public void StartShowing()
     {
-        StartCoroutine(ShowImage(warning, 3f));
+        StartCoroutine(ShowImage(warning, transitionTime));
     }
 
     private IEnumerator FadeImage(Image image, float duration)
@@ -53,6 +54,6 @@ public class FadeWarning : MonoBehaviour
     private IEnumerator WaitTwoSeconds()
     {
         yield return new WaitForSeconds(2f);
-        StartCoroutine(FadeImage(warning, 3f));
+        StartCoroutine(FadeImage(warning, transitionTime));
     }
 }

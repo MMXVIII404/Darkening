@@ -27,7 +27,7 @@ public class Monster : MonoBehaviour
                 {
                     case 1:
                         slot.SetName("Grettos");
-                        child.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Grettos");
+                        child.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/Grettos_Thumbnail");
                         break;
                     case 2:
                         slot.SetName("Monster 2");

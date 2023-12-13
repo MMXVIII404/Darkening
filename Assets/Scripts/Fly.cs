@@ -10,6 +10,8 @@ public class Fly : MonoBehaviour
 
     void Start()
     {
+        this.amplitude = Random.Range(0.13f, 0.15f);
+        this.frequency = Random.Range(0.2f, 0.3f);
         aimOnTarget = GameObject.Find("GameLogic").GetComponent<AimOnTarget>();
         startPos = transform.position;
     }
