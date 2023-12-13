@@ -58,7 +58,7 @@ public class AimOnTarget : MonoBehaviour
         //add by ljh start
         if (!isAttacking)
         {
-            if (currentMonster != null)
+            if (currentMonster != null  && currentMonster.tag == "TrueMonster")
             {
                 currentMonster.transform.GetComponent<AudioSource>().mute = false;
             }
@@ -159,7 +159,7 @@ public class AimOnTarget : MonoBehaviour
     {
         float distanceToCheckArea = Vector2.Distance(checkAreaPosition, new Vector2(Screen.width / 2, Screen.height / 2));
 
-        float radius = checkArea.rectTransform.sizeDelta.x * 0.5f + 50f;
+        float radius = checkArea.rectTransform.sizeDelta.x * 0.5f + 80f;
         return distanceToCheckArea <= radius;
     }
 
@@ -197,9 +197,12 @@ public class AimOnTarget : MonoBehaviour
                         checkArea.gameObject.SetActive(false);
                         Monster.GetComponent<Monster>().AssignMonsterToSlot();
                         yield return new WaitForSeconds(2f); // 等待2秒
-                        beginButton.gameObject.SetActive(true);
+                        //beginButton.gameObject.SetActive(true);
                         // TODO: Add some VFX to destroy the monster
-                        Destroy(Monster); // 假设您要销毁怪物对象
+                        //Destroy(Monster); // 假设您要销毁怪物对象
+
+                        planeDetectionManager.DestroyAllMonster();
+
                         break; // 成功捕捉，退出循环
                     }
                     else
@@ -252,10 +255,16 @@ public class AimOnTarget : MonoBehaviour
         Transform transformBackup = currentMonster.transform;
         currentMonster.transform.position = mainCamera.transform.position + mainCamera.transform.forward * 0.3f;
         _animator.SetTrigger("Eye_Attack");
-        idleAudioSource = currentMonster.transform.GetComponent<AudioSource>();
+
+        if (currentMonster.tag == "TrueMonster")
+        {
+            idleAudioSource = currentMonster.transform.GetComponent<AudioSource>();
+            idleAudioSource.mute = true;
+        }
+        
         attackAudioSource = currentMonster.transform.GetChild(0).GetChild(0).GetComponent<AudioSource>();
         attackAudioSource.PlayOneShot(attackAudioSource.clip);
-        idleAudioSource.mute = true;
+        
         yield return new WaitForSeconds(2f);
         isAttacking = false;
         currentMonster.transform.position = new Vector3(-transformBackup.position.x, transformBackup.position.y, transformBackup.position.z);
