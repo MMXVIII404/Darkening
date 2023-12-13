@@ -44,6 +44,7 @@ public class AimOnTarget : MonoBehaviour
     public PlaneDetectionManager planeDetectionManager;
     public GameObject LeftRedImage;
     public GameObject RightRedImage;
+    public GameObject BottomRedImage;
 
     //add by ljh end
 
@@ -284,6 +285,7 @@ public class AimOnTarget : MonoBehaviour
             gameoverPanel.SetActive(true);
             RightRedImage.SetActive(false);
             LeftRedImage.SetActive(false);
+            BottomRedImage.SetActive(false);
         }
     }
 }

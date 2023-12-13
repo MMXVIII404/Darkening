@@ -42,6 +42,7 @@ public class PlaneDetectionManager : MonoBehaviour
     public AudioSource switchPositionAudioSource;
     public GameObject LeftRedImage;
     public GameObject RightRedImage;
+    public GameObject BottomRedImage;
 
     int count = 3;
 
@@ -98,6 +99,7 @@ public class PlaneDetectionManager : MonoBehaviour
             {
                 RightRedImage.SetActive(true);
                 LeftRedImage.SetActive(false);
+                BottomRedImage.SetActive(false);
             }
             else if (rightDotVector < 0 &&
             angle > 10 && 
@@ -105,16 +107,19 @@ public class PlaneDetectionManager : MonoBehaviour
             {
                 RightRedImage.SetActive(false);
                 LeftRedImage.SetActive(true);
+                BottomRedImage.SetActive(false);
             }
             
             else if(angle >= 90){
-                RightRedImage.SetActive(true);
+                RightRedImage.SetActive(false);
                 LeftRedImage.SetActive(false);
+                BottomRedImage.SetActive(true);
             }
             else 
             {
                 RightRedImage.SetActive(false);
                 LeftRedImage.SetActive(false);
+                BottomRedImage.SetActive(false);
             }
         }
     }

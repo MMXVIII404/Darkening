@@ -12,6 +12,7 @@ public class Battery : MonoBehaviour
     public FadeWarning fadeWarning;
     public GameObject LeftRedImage;
     public GameObject RightRedImage;
+    public GameObject BottomRedImage;
     void Start()
     {
         decreaseRatePerSecond = 1 / 300f; // ��5�����ڼ���0'
@@ -35,6 +36,7 @@ public class Battery : MonoBehaviour
                 gameoverPanel.SetActive(true);
                 RightRedImage.SetActive(false);
                 LeftRedImage.SetActive(false);
+                BottomRedImage.SetActive(false);
             }
         }
     }
