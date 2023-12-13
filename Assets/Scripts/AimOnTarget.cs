@@ -179,7 +179,7 @@ public class AimOnTarget : MonoBehaviour
         checkArea.gameObject.SetActive(true);
         checkAreaSlider.gameObject.SetActive(true);
         checkAreaSlider.value = 0f;
-        yield return new WaitForSeconds(2f); // 等待2秒
+        yield return new WaitForSeconds(0.5f); // 等待2秒
 
         // 激活扫描区域
 
@@ -202,7 +202,7 @@ public class AimOnTarget : MonoBehaviour
                         displayText.GetComponent<TMP_Text>().text = "Monster caught!";
                         checkArea.gameObject.SetActive(false);
                         Monster.GetComponent<Monster>().AssignMonsterToSlot();
-                        yield return new WaitForSeconds(2f); // 等待2秒
+                        yield return new WaitForSeconds(1f); 
                         //beginButton.gameObject.SetActive(true);
                         // TODO: Add some VFX to destroy the monster
                         //Destroy(Monster); // 假设您要销毁怪物对象
@@ -220,7 +220,7 @@ public class AimOnTarget : MonoBehaviour
                         checkArea.gameObject.SetActive(false);
                         OnHit(hitValue);   // Get damage
                         //Destroy(Monster);
-                        yield return new WaitForSeconds(2f);
+                        yield return new WaitForSeconds(1f);
                         // TODO: Hit Effect
 
                         break;
@@ -237,7 +237,7 @@ public class AimOnTarget : MonoBehaviour
                 checkArea.gameObject.SetActive(false);
                 // TODO: Hit Effect
                 OnHit(hitValue);   // Get damage
-                yield return new WaitForSeconds(2f); // 等待2秒
+                yield return new WaitForSeconds(1f); // 等待2秒
 
 
                 // 可以在这里添加逻辑，如果怪物逃走了，是否停止捕捉
@@ -271,7 +271,7 @@ public class AimOnTarget : MonoBehaviour
         attackAudioSource = currentMonster.transform.GetChild(0).GetChild(0).GetComponent<AudioSource>();
         attackAudioSource.PlayOneShot(attackAudioSource.clip);
         
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         isAttacking = false;
         currentMonster.transform.position = new Vector3(-transformBackup.position.x, transformBackup.position.y, transformBackup.position.z);
         planeDetectionManager.trueMonsterNumber = UnityEngine.Random.Range(2, planeDetectionManager.maxMonsters - 1);

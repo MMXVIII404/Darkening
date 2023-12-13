@@ -167,7 +167,7 @@ public class PlaneDetectionManager : MonoBehaviour
                 fakeMonsters[j].transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material.SetTexture("_MainTex", trueMonsterMainTexture);
                 fakeMonsters[j].transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material.SetTexture("_MainTex", trueMonsterMainTexture);
                 fakeMonsters[j].transform.GetChild(0).GetChild(2).GetComponent<Renderer>().material.SetTexture("_MainTex", trueMonsterMainTexture);
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.3f);
                 fakeMonsters[j].transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material.SetTexture("_MainTex", fakeMonsterMainTexture);
                 fakeMonsters[j].transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material.SetTexture("_MainTex", fakeMonsterMainTexture);
                 fakeMonsters[j].transform.GetChild(0).GetChild(2).GetComponent<Renderer>().material.SetTexture("_MainTex", fakeMonsterMainTexture);

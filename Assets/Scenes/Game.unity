@@ -1492,7 +1492,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &253284321
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1532,7 +1532,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b851e51f19a72dd46b3844f72f7f86c4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8350df9e21efb9b408b0d0a56f242928, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6615,8 +6615,8 @@ MonoBehaviour:
   maxGenerateHeight: 1.5
   currentMonsters: 0
   preScanText: {fileID: 723554273}
-  fakeMonsterMainTexture: {fileID: 2800000, guid: 658fcfc777b0fbb4d9fb719e6603cb85, type: 3}
-  trueMonsterMainTexture: {fileID: 2800000, guid: 0000cbf71c072ba499fbee6a1e951071, type: 3}
+  fakeMonsterMainTexture: {fileID: 2800000, guid: 0000cbf71c072ba499fbee6a1e951071, type: 3}
+  trueMonsterMainTexture: {fileID: 2800000, guid: 658fcfc777b0fbb4d9fb719e6603cb85, type: 3}
   switchPositionAudioSource: {fileID: 1045864971}
   LeftRedImage: {fileID: 1563978354}
   RightRedImage: {fileID: 253284320}
@@ -9270,7 +9270,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1563978355
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9310,7 +9310,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b851e51f19a72dd46b3844f72f7f86c4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8350df9e21efb9b408b0d0a56f242928, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
