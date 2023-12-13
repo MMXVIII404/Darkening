@@ -79,28 +79,39 @@ public class PlaneDetectionManager : MonoBehaviour
     {
         if (fakeMonsters[trueMonsterNumber] != null)
         {
-            Vector2 maincameraRightVector2 = new Vector2(mainCamera.transform.right.x,mainCamera.transform.forward.z);
-            Vector2 maincameraForwardVector2 = new Vector2(mainCamera.transform.forward.x,mainCamera.transform.forward.z);
-            Vector2 maincameraToTruemonsterVector2Normalized = new Vector2((fakeMonsters[trueMonsterNumber].transform.position.x - mainCamera.transform.position.x),
-            (fakeMonsters[trueMonsterNumber].transform.position.z - mainCamera.transform.position.z)).normalized;
+            Vector2 maincameraRightVector2 = new Vector2(mainCamera.transform.right.x,mainCamera.transform.forward.z).normalized;
+            Vector2 maincameraForwardVector2 = new Vector2(mainCamera.transform.forward.x,mainCamera.transform.forward.z).normalized;
+
+            Vector2 maincameraToTruemonsterVector2Normalized = new Vector2((fakeMonsters[trueMonsterNumber].transform.position - mainCamera.transform.position).x,
+            (fakeMonsters[trueMonsterNumber].transform.position - mainCamera.transform.position).z).normalized;
+            
+            double angle = Vector2.Angle(maincameraForwardVector2,maincameraToTruemonsterVector2Normalized);
+            double rightDotVector = Vector2.Dot(maincameraRightVector2,maincameraToTruemonsterVector2Normalized);
            
             // Debug.Log("Angle"+Vector2.Angle(maincameraRightVector2,maincameraToTruemonsterVector2Normalized));
             // Debug.Log("Dot"+Vector2.Dot(maincameraRightVector2,maincameraToTruemonsterVector2Normalized));
 
             
-            if (Vector2.Dot(maincameraRightVector2,maincameraToTruemonsterVector2Normalized) > 0 &&
-            Vector2.Angle(maincameraForwardVector2,maincameraToTruemonsterVector2Normalized) > 10)
+            if (rightDotVector >= 0 &&
+            angle > 10 && 
+            angle < 90)
             {
                 RightRedImage.SetActive(true);
                 LeftRedImage.SetActive(false);
             }
-            else if (Vector2.Dot(maincameraRightVector2,maincameraToTruemonsterVector2Normalized) < 0 &&
-            Vector2.Angle(maincameraForwardVector2,maincameraToTruemonsterVector2Normalized) > 10)
+            else if (rightDotVector < 0 &&
+            angle > 10 && 
+            angle < 90)
             {
                 RightRedImage.SetActive(false);
                 LeftRedImage.SetActive(true);
             }
-            else if (Vector2.Angle(maincameraForwardVector2,maincameraToTruemonsterVector2Normalized) < 10)
+            
+            else if(angle >= 90){
+                RightRedImage.SetActive(true);
+                LeftRedImage.SetActive(false);
+            }
+            else 
             {
                 RightRedImage.SetActive(false);
                 LeftRedImage.SetActive(false);
