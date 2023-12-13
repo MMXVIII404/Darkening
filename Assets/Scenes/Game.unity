@@ -8131,8 +8131,8 @@ RectTransform:
   - {fileID: 1223185019}
   m_Father: {fileID: 723478118}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -9415,7 +9415,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 800, y: 1644.4445}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1223185020
 MonoBehaviour:
@@ -9908,6 +9908,7 @@ MonoBehaviour:
   LeftRedImage: {fileID: 1563978354}
   RightRedImage: {fileID: 253284320}
   BottomRedImage: {fileID: 1827066249}
+  planeDetectionManager: {fileID: 1045864970}
 --- !u!1 &1310160360
 GameObject:
   m_ObjectHideFlags: 0

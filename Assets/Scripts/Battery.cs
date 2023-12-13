@@ -13,6 +13,7 @@ public class Battery : MonoBehaviour
     public GameObject LeftRedImage;
     public GameObject RightRedImage;
     public GameObject BottomRedImage;
+    public PlaneDetectionManager planeDetectionManager;
     void Start()
     {
         decreaseRatePerSecond = 1 / 300f; // ��5�����ڼ���0'
@@ -37,6 +38,7 @@ public class Battery : MonoBehaviour
                 RightRedImage.SetActive(false);
                 LeftRedImage.SetActive(false);
                 BottomRedImage.SetActive(false);
+                planeDetectionManager.DestroyAllMonster();
             }
         }
     }

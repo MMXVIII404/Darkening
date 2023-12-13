@@ -286,6 +286,7 @@ public class AimOnTarget : MonoBehaviour
             RightRedImage.SetActive(false);
             LeftRedImage.SetActive(false);
             BottomRedImage.SetActive(false);
+            planeDetectionManager.DestroyAllMonster();
         }
     }
 }
