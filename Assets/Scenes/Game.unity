@@ -8178,6 +8178,8 @@ MonoBehaviour:
   fill: {fileID: 598059265}
   gameoverPanel: {fileID: 54183777}
   fadeWarning: {fileID: 63555347}
+  LeftRedImage: {fileID: 0}
+  RightRedImage: {fileID: 0}
 --- !u!1 &1310160360
 GameObject:
   m_ObjectHideFlags: 0
@@ -8359,6 +8361,8 @@ MonoBehaviour:
   gameoverPanel: {fileID: 54183777}
   isAttacking: 0
   planeDetectionManager: {fileID: 1045864970}
+  LeftRedImage: {fileID: 1563978354}
+  RightRedImage: {fileID: 253284320}
 --- !u!4 &1314599429
 Transform:
   m_ObjectHideFlags: 0

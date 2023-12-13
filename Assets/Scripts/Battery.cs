@@ -10,9 +10,11 @@ public class Battery : MonoBehaviour
     public Image fill;
     public GameObject gameoverPanel;
     public FadeWarning fadeWarning;
+    public GameObject LeftRedImage;
+    public GameObject RightRedImage;
     void Start()
     {
-        decreaseRatePerSecond = 1 / 300f; // ÔÚ5·ÖÖÓÄÚ¼õÖÁ0'
+        decreaseRatePerSecond = 1 / 300f; // ï¿½ï¿½5ï¿½ï¿½ï¿½ï¿½ï¿½Ú¼ï¿½ï¿½ï¿½0'
         fill.color = Color.green;
     }
 
@@ -31,6 +33,8 @@ public class Battery : MonoBehaviour
             if (batterySlider.value <= 0.01)
             {
                 gameoverPanel.SetActive(true);
+                RightRedImage.SetActive(false);
+                LeftRedImage.SetActive(false);
             }
         }
     }

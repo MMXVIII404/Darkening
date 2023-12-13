@@ -30,7 +30,6 @@ public class AimOnTarget : MonoBehaviour
     bool inRange = false;
     string currentMonsterName = string.Empty;
 
-    float timeCount = 0;
     bool startCountTime = false;
     bool catched = false;
     bool startCatching = false;
@@ -43,6 +42,8 @@ public class AimOnTarget : MonoBehaviour
     private AudioSource attackAudioSource;
     public bool isAttacking = false;
     public PlaneDetectionManager planeDetectionManager;
+    public GameObject LeftRedImage;
+    public GameObject RightRedImage;
 
     //add by ljh end
 
@@ -71,7 +72,6 @@ public class AimOnTarget : MonoBehaviour
         }
         //add by ljh end
         //Catch();
-        CountTime();
         PointAtMonster();
         FollowMonster();
         // Debug.Log(buttonPressed);
@@ -87,18 +87,6 @@ public class AimOnTarget : MonoBehaviour
         else
         {
             battery.UseBattery(0.05f);
-        }
-    }
-
-    void CountTime()
-    {
-        if (startCountTime)
-        {
-            timeCount += Time.deltaTime;
-        }
-        else
-        {
-            timeCount = 0;
         }
     }
 
@@ -294,6 +282,8 @@ public class AimOnTarget : MonoBehaviour
         if (San <= 0)
         {
             gameoverPanel.SetActive(true);
+            RightRedImage.SetActive(false);
+            LeftRedImage.SetActive(false);
         }
     }
 }
