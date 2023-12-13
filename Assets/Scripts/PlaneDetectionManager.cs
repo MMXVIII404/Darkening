@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+// using System.Numerics;
 using TMPro;
 using Unity.VisualScripting;
 using Unity.XR.CoreUtils;
@@ -17,6 +18,7 @@ public class PlaneDetectionManager : MonoBehaviour
     private int monsterCountBack;
     public GameObject trueMonsterPrefab;
     public GameObject smokeEffect;
+    [SerializeField]
     private Camera mainCamera;
     private GameObject[] fakeMonsters;
     private int i = 0;
@@ -37,6 +39,8 @@ public class PlaneDetectionManager : MonoBehaviour
     public Texture trueMonsterMainTexture;
     private bool breakAllLoops = false;
     public AudioSource switchPositionAudioSource;
+    public GameObject LeftRedImage;
+    public GameObject RightRedImage;
 
     int count = 3;
 
@@ -72,7 +76,22 @@ public class PlaneDetectionManager : MonoBehaviour
     }
     private void Update()
     {
-        // Debug.Log(planeManager.trackables.count);
+        if (fakeMonsters[trueMonsterNumber] != null)
+        {
+            Debug.Log(Vector3.Angle(mainCamera.transform.right, (fakeMonsters[trueMonsterNumber].transform.position - mainCamera.transform.position)));
+            if (Vector3.Dot(mainCamera.transform.right, (fakeMonsters[trueMonsterNumber].transform.position - mainCamera.transform.position)) > 0 &&
+            Vector3.Angle(mainCamera.transform.right, (fakeMonsters[trueMonsterNumber].transform.position - mainCamera.transform.position)) > 10)
+            {
+                RightRedImage.SetActive(true);
+                LeftRedImage.SetActive(false);
+            }
+            else if (Vector3.Dot(mainCamera.transform.right, (fakeMonsters[trueMonsterNumber].transform.position - mainCamera.transform.position)) < 0 &&
+            Vector3.Angle(mainCamera.transform.right, (fakeMonsters[trueMonsterNumber].transform.position - mainCamera.transform.position)) > 10)
+            {
+                LeftRedImage.SetActive(true);
+                RightRedImage.SetActive(false);
+            }
+        }
     }
     private IEnumerator DelayDestroy()
     {
@@ -107,6 +126,7 @@ public class PlaneDetectionManager : MonoBehaviour
                 fakeMonsters[j].transform.GetChild(0).GetChild(1).GetComponent<Renderer>().material.SetTexture("_MainTex", trueMonsterMainTexture);
                 fakeMonsters[j].transform.GetChild(0).GetChild(2).GetComponent<Renderer>().material.SetTexture("_MainTex", trueMonsterMainTexture);
                 fakeMonsters[j].tag = "TrueMonster";
+
                 // Transform transformBackup = fakeMonsters[j].transform;
                 // Destroy(fakeMonsters[j]);
                 // Instantiate(trueMonsterPrefab, transformBackup.position, transformBackup.rotation);
@@ -164,8 +184,10 @@ public class PlaneDetectionManager : MonoBehaviour
                                 float randomHeight = Random.Range(0, maxGenerateHeight);
                                 Vector3 randomPoint3D = plane.transform.TransformPoint(new Vector3(randomPoint.x, randomPoint.x + randomHeight, randomPoint.y));
                                 // Debug.Log(randomPoint3D);
-                                if(monsterCount >= 1){
-                                    if(Vector3.Distance(randomPoint3D,fakeMonsters[monsterCount-1].transform.position) < 0.3f){
+                                if (monsterCount >= 1)
+                                {
+                                    if (Vector3.Distance(randomPoint3D, fakeMonsters[monsterCount - 1].transform.position) < 0.3f)
+                                    {
                                         randomPoint = RandomPointInPolygon(boundaryPoints);
                                         randomHeight = Random.Range(-0.3f, maxGenerateHeight);
                                         randomPoint3D = plane.transform.TransformPoint(new Vector3(randomPoint.x, randomPoint.x + randomHeight, randomPoint.y));
@@ -182,7 +204,7 @@ public class PlaneDetectionManager : MonoBehaviour
                             StartCoroutine(SwitchTrueMonster());
                             // if (count >= 3)
                             // {
-                                allowInit = false;
+                            allowInit = false;
                             // }
                         }
                     }
