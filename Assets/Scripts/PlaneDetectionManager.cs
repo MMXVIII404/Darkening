@@ -79,18 +79,31 @@ public class PlaneDetectionManager : MonoBehaviour
     {
         if (fakeMonsters[trueMonsterNumber] != null)
         {
-            Debug.Log(Vector3.Angle(mainCamera.transform.right, (fakeMonsters[trueMonsterNumber].transform.position - mainCamera.transform.position)));
-            if (Vector3.Dot(mainCamera.transform.right, (fakeMonsters[trueMonsterNumber].transform.position - mainCamera.transform.position)) > 0 &&
-            Vector3.Angle(mainCamera.transform.right, (fakeMonsters[trueMonsterNumber].transform.position - mainCamera.transform.position)) > 10)
+            Vector2 maincameraRightVector2 = new Vector2(mainCamera.transform.right.x,mainCamera.transform.forward.z);
+            Vector2 maincameraForwardVector2 = new Vector2(mainCamera.transform.forward.x,mainCamera.transform.forward.z);
+            Vector2 maincameraToTruemonsterVector2Normalized = new Vector2((fakeMonsters[trueMonsterNumber].transform.position.x - mainCamera.transform.position.x),
+            (fakeMonsters[trueMonsterNumber].transform.position.z - mainCamera.transform.position.z)).normalized;
+           
+            // Debug.Log("Angle"+Vector2.Angle(maincameraRightVector2,maincameraToTruemonsterVector2Normalized));
+            // Debug.Log("Dot"+Vector2.Dot(maincameraRightVector2,maincameraToTruemonsterVector2Normalized));
+
+            
+            if (Vector2.Dot(maincameraRightVector2,maincameraToTruemonsterVector2Normalized) > 0 &&
+            Vector2.Angle(maincameraForwardVector2,maincameraToTruemonsterVector2Normalized) > 10)
             {
                 RightRedImage.SetActive(true);
                 LeftRedImage.SetActive(false);
             }
-            else if (Vector3.Dot(mainCamera.transform.right, (fakeMonsters[trueMonsterNumber].transform.position - mainCamera.transform.position)) < 0 &&
-            Vector3.Angle(mainCamera.transform.right, (fakeMonsters[trueMonsterNumber].transform.position - mainCamera.transform.position)) > 10)
+            else if (Vector2.Dot(maincameraRightVector2,maincameraToTruemonsterVector2Normalized) < 0 &&
+            Vector2.Angle(maincameraForwardVector2,maincameraToTruemonsterVector2Normalized) > 10)
             {
-                LeftRedImage.SetActive(true);
                 RightRedImage.SetActive(false);
+                LeftRedImage.SetActive(true);
+            }
+            else if (Vector2.Angle(maincameraForwardVector2,maincameraToTruemonsterVector2Normalized) < 10)
+            {
+                RightRedImage.SetActive(false);
+                LeftRedImage.SetActive(false);
             }
         }
     }

@@ -62,6 +62,12 @@ public class AimOnTarget : MonoBehaviour
             {
                 currentMonster.transform.GetComponent<AudioSource>().mute = false;
             }
+            
+
+        }
+        if (currentMonster != null  && currentMonster.tag == "Monster")
+        {
+            currentMonster.transform.GetComponent<AudioSource>().mute = false;
         }
         //add by ljh end
         //Catch();

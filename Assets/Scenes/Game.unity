@@ -1492,7 +1492,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &253284321
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6609,6 +6609,7 @@ MonoBehaviour:
   fakeMonsterPrefab: {fileID: 253384422229603084, guid: 360a69ca87d35e94cae9ae5ffa3bf3e1, type: 3}
   trueMonsterPrefab: {fileID: 4601761716725402142, guid: b9b5f6ce2b96e6048a0d53857434cfc7, type: 3}
   smokeEffect: {fileID: 8668514576537292064}
+  mainCamera: {fileID: 0}
   maxMonsters: 9
   trueMonsterNumber: 0
   maxGenerateHeight: 1.5
@@ -6617,8 +6618,8 @@ MonoBehaviour:
   fakeMonsterMainTexture: {fileID: 2800000, guid: 658fcfc777b0fbb4d9fb719e6603cb85, type: 3}
   trueMonsterMainTexture: {fileID: 2800000, guid: 0000cbf71c072ba499fbee6a1e951071, type: 3}
   switchPositionAudioSource: {fileID: 1045864971}
-  LeftRedSlider: {fileID: 1563978354}
-  RightRedSlider: {fileID: 253284320}
+  LeftRedImage: {fileID: 1563978354}
+  RightRedImage: {fileID: 253284320}
 --- !u!82 &1045864971
 AudioSource:
   m_ObjectHideFlags: 0
@@ -9269,7 +9270,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1563978355
 RectTransform:
   m_ObjectHideFlags: 0
