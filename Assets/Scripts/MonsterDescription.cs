@@ -35,7 +35,7 @@ public class MonsterDescription : MonoBehaviour
         }
         else
         {
-            monsterName.text = "Unknown Monster";
+            monsterName.text = "Unknown";
             monsterDescription.text = "Search around!";
         }
 
