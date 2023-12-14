@@ -286,12 +286,16 @@ public class PlaneDetectionManager : MonoBehaviour
 
     public void DestroyAllMonster()
     {
-        for (int i = 0; i < fakeMonsters.Length; i++)
+        if(fakeMonsters != null){
+            for (int i = 0; i < fakeMonsters.Length; i++)
         {
             Destroy(fakeMonsters[i]);
         }
+        if(firstFakeMonster != null){
         Destroy(firstFakeMonster);
-
+        }
+        }
+        
     }
 }
 
