@@ -107,7 +107,7 @@ public class AimOnTarget : MonoBehaviour
                     if (!startCatching)
                     {
                         displayText.GetComponent<TMP_Text>().text = "Can Catch!";
-                        displayText.GetComponent<TMP_Text>().color = Color.yellow;
+                        displayText.GetComponent<TMP_Text>().color = new Color32(0xEE, 0x94, 0x18, 0xFF); // EE9418 in hexadecimal
                     }
                     inRange = true;
 
@@ -120,7 +120,7 @@ public class AimOnTarget : MonoBehaviour
                 else    // Too far away from Monster.
                 {
                     displayText.GetComponent<TMP_Text>().text = "Too Far!";
-                    displayText.GetComponent<TMP_Text>().color = Color.red;
+                    displayText.GetComponent<TMP_Text>().color = new Color32(0xFF, 0x44, 0x1F, 0xFF); // FF441F in hexadecimal
                     inRange = false;
                     startCatching = false;
                 }
@@ -128,7 +128,7 @@ public class AimOnTarget : MonoBehaviour
             else    // Not point at a Monster.
             {
                 displayText.GetComponent<TMP_Text>().text = "No Monster!";
-                displayText.GetComponent<TMP_Text>().color = Color.blue;
+                displayText.GetComponent<TMP_Text>().color = new Color32(0xDE, 0xDE, 0xDE, 0xFF); // DEDEDE in hexadecimal
                 inRange = false;
                 startCatching = false;
             }
@@ -136,7 +136,7 @@ public class AimOnTarget : MonoBehaviour
         else
         {
             displayText.GetComponent<TMP_Text>().text = "Search Around!";
-            displayText.GetComponent<TMP_Text>().color = Color.gray;
+            displayText.GetComponent<TMP_Text>().color = new Color32(0xDE, 0xDE, 0xDE, 0xFF); // DEDEDE in hexadecimal
             inRange = false;
             startCatching = false; // 重置捕捉状态
         }
@@ -168,7 +168,7 @@ public class AimOnTarget : MonoBehaviour
         checkArea.gameObject.SetActive(true);
         checkAreaSlider.gameObject.SetActive(true);
         checkAreaSlider.value = 0f;
-        yield return new WaitForSeconds(0.5f); // 等待2秒
+        yield return new WaitForSeconds(1.5f); // 等待2秒
 
         // 激活扫描区域
 
@@ -262,7 +262,9 @@ public class AimOnTarget : MonoBehaviour
         
         yield return new WaitForSeconds(1f);
         isAttacking = false;
-        currentMonster.transform.position = new Vector3(-transformBackup.position.x, transformBackup.position.y, transformBackup.position.z);
+        if(currentMonster != null) {
+            currentMonster.transform.position = new Vector3(-transformBackup.position.x, transformBackup.position.y, transformBackup.position.z);
+        }
         planeDetectionManager.trueMonsterNumber = UnityEngine.Random.Range(2, planeDetectionManager.maxMonsters - 1);
         StartCoroutine(planeDetectionManager.SwitchTrueMonster());
         // StopCoroutine(AttackAndChangePosition());
