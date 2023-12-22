@@ -162,21 +162,19 @@ public class AimOnTarget : MonoBehaviour
     {
         currentMonster = Monster;
         buttonPressed = false;
-        // 显示扫描信息并等待两秒
+        // Show scannning information
         displayText.GetComponent<TMP_Text>().text = "Prepare to scan...";
         displayText.GetComponent<TMP_Text>().color = Color.green;
         checkArea.gameObject.SetActive(true);
         checkAreaSlider.gameObject.SetActive(true);
         checkAreaSlider.value = 0f;
-        yield return new WaitForSeconds(1.5f); // 等待2秒
-
-        // 激活扫描区域
+        yield return new WaitForSeconds(1.5f);
 
         startCountTime = true;
 
         float stayTime = 0f;
 
-        while (startCatching) // 使用 startCatching 来控制循环
+        while (startCatching)
         {
             if (IsPointInsideCheckArea(currentMonster))
             {
@@ -192,13 +190,9 @@ public class AimOnTarget : MonoBehaviour
                         checkArea.gameObject.SetActive(false);
                         Monster.GetComponent<Monster>().AssignMonsterToSlot();
                         yield return new WaitForSeconds(1f); 
-                        //beginButton.gameObject.SetActive(true);
-                        // TODO: Add some VFX to destroy the monster
-                        //Destroy(Monster); // 假设您要销毁怪物对象
-
                         planeDetectionManager.DestroyAllMonster();
 
-                        break; // 成功捕捉，退出循环
+                        break;
                     }
                     else
                     {
@@ -208,9 +202,7 @@ public class AimOnTarget : MonoBehaviour
                         displayText.GetComponent<TMP_Text>().text = "Fake Monster!";
                         checkArea.gameObject.SetActive(false);
                         OnHit(hitValue);   // Get damage
-                        //Destroy(Monster);
                         yield return new WaitForSeconds(1f);
-                        // TODO: Hit Effect
 
                         break;
                     }
@@ -221,15 +213,12 @@ public class AimOnTarget : MonoBehaviour
                 //add by ljh start
                 StartCoroutine(AttackAndChangePosition());
                 //add by ljh end
-                stayTime = 0f; // 如果怪物移出了检测区域，重置计时器
+                stayTime = 0f; // Reset timer
                 displayText.GetComponent<TMP_Text>().text = "Monster escaped!";
                 checkArea.gameObject.SetActive(false);
-                // TODO: Hit Effect
                 OnHit(hitValue);   // Get damage
-                yield return new WaitForSeconds(1f); // 等待2秒
+                yield return new WaitForSeconds(1f);
 
-
-                // 可以在这里添加逻辑，如果怪物逃走了，是否停止捕捉
                 startCatching = false;
 
                 break;
@@ -242,6 +231,7 @@ public class AimOnTarget : MonoBehaviour
         startCountTime = false;
         startCatching = false;
     }
+
     //add by ljh start
     private IEnumerator AttackAndChangePosition()
     {
