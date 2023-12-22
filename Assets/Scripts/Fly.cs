@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Fly : MonoBehaviour
 {
-    public float amplitude = 0.5f; // 浮动的幅度
-    public float frequency = 1f; // 浮动的频率
+    public float amplitude = 0.5f;
+    public float frequency = 1f;
     private AimOnTarget aimOnTarget;
 
     private Vector3 startPos;
@@ -22,7 +22,5 @@ public class Fly : MonoBehaviour
              float tempPos = amplitude * Mathf.Sin(Time.time * Mathf.PI * frequency);
              transform.position = startPos + Vector3.up * tempPos;
           }
-        // 计算上下浮动的新位置
-       
     }
 }

@@ -11,7 +11,6 @@ public class UpdateSan : MonoBehaviour
         gameLogic.onHitAction += RefreshSan;
     }
 
-    // Update is called once per frame
     void Update()
     {
     }

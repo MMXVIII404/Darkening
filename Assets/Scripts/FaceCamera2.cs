@@ -14,7 +14,7 @@ public class FaceCamera2 : MonoBehaviour
         if (target != null)
         {
              Vector3 targetDirection = target.transform.position - transform.position;
-            //targetDirection.y = 0; // 忽略Y轴的差异，保证旋转只在水平面上
+            //targetDirection.y = 0; // Ignore y axis
 
             Quaternion lookRotation = Quaternion.LookRotation(targetDirection);
             transform.rotation = Quaternion.Euler(lookRotation.eulerAngles.x, lookRotation.eulerAngles.y, lookRotation.eulerAngles.z);

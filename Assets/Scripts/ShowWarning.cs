@@ -18,8 +18,6 @@ public class FadeWarning : MonoBehaviour
     private IEnumerator FadeImage(Image image, float duration)
     {
         float counter = 0;
-
-        // 获取图像的初始 alpha 值
         Color startColor = image.color;
         Color warningStartColor = warningSection.GetComponent<Image>().color;
         while (counter < duration)
@@ -39,7 +37,6 @@ public class FadeWarning : MonoBehaviour
     {
         float counter = 0;
 
-        // 获取图像的初始 alpha 值
         Color startColor = image.color;
         while (counter < duration)
         {

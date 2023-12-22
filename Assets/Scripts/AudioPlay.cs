@@ -15,7 +15,7 @@ public class AudioPlay : MonoBehaviour
         }
         else
         {
-            Debug.LogError("AudioSource ªÚ AudioClip Œ¥…Ë÷√£°");
+            Debug.LogError("AudioSource or AudioClip not set!");
         }
     }
 }

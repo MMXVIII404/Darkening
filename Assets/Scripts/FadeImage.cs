@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class FadeImage : MonoBehaviour
 {
-    public Image imageToFade; // 需要设置为要淡出的图像
+    public Image imageToFade;
     public Image startButtonImage;
     public Image logo1Image;
     public Image logo2Image;
@@ -13,17 +13,16 @@ public class FadeImage : MonoBehaviour
     public TextMeshProUGUI header;
     public TextMeshProUGUI startText;
     public FadeWarning fadeWarning;
-    // 调用这个方法来开始淡出效果
+
     public void StartFading()
     {
-        StartCoroutine(FadeOut(imageToFade, 3f)); // 3秒内淡出
+        StartCoroutine(FadeOut(imageToFade, 3f));
     }
 
     private IEnumerator FadeOut(Image image, float duration)
     {
         float counter = 0;
 
-        // 获取图像的初始 alpha 值
         Color startColor = image.color;
         Color color = header.color;
         while (counter < duration)
